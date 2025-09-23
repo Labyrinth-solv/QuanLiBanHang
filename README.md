@@ -1,4 +1,4 @@
-# QuanLiBanHang
+# QuanLyBanHang
 Thêm sản phẩm
 Xóa sản phẩm
 Tìm kiếm sản phẩm
