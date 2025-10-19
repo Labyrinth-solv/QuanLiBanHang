@@ -10,11 +10,12 @@ module MyStore {
 
     opens Controller to javafx.fxml;
     opens View to javafx.fxml;
+    opens Controller.menuController to javafx.fxml;
 
     exports Controller;
     exports Start;
     exports form;
     exports Controller.menuController;
-    opens Controller.menuController to javafx.fxml;
+
 
 }

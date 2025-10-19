@@ -68,7 +68,7 @@ public class ManHinhChinhController implements Initializable {
 
         txtTenNhanVien.setText(Contants.staffName);
 
-        btnDanhSachSanPham_DichVu.setDisable(true);
+//        btnDanhSachSanPham_DichVu.setDisable(true);
         btnThemNhanVien.setDisable(true);
         btnDatHang_QuanLyKho.setDisable(true);
         btnNhapHang_QuanLyKho.setDisable(true);
