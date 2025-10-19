@@ -1,21 +1,37 @@
 package Start;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.fxml.FXMLLoader;
+
+import java.util.Objects;
+
 
 public class Main extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Label label=new Label("Hello, World");
-        Scene scene=new Scene(new StackPane(label),500,500);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage primaryStage) {
+        try {
+            GridPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/Main.fxml")));
+            Scene scene = new Scene(root,500,200);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/View/application.css")).toExternalForm());
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+            primaryStage.setTitle("Đăng nhập");
+
+            primaryStage.setResizable(false);
+            primaryStage.setMaximized(false);
+
+            primaryStage.setOnCloseRequest(e-> Platform.exit());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 }
