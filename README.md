@@ -11,7 +11,7 @@ Thanh toán đơn hàng
 <img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/e3d3016c-a998-4da6-9d39-c1ec0a0ea152" />
 
 
-<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/10ab3ec0-d41c-498e-877a-d513df4ea60c" />
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/d8145422-766a-4d21-9745-c049a2bbcd1f" />
 
 
 -Sửa user và password bằng tài khoản mysql
