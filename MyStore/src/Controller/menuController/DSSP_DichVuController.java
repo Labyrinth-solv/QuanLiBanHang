@@ -16,10 +16,10 @@ public class DSSP_DichVuController {
     private TableView<Product> tableSanPham;
 
     @FXML
-    private TableColumn<Product, String> colId, colSupplierId, colCategoryId, colName, colUnit;
+    private TableColumn<Product, String> colId, colCategoryId, colName, colUnit;
 
     @FXML
-    private TextField txtId, txtSupplierId, txtCategoryId, txtName, txtUnit, txtTimKiem;
+    private TextField txtId, txtCategoryId, txtName, txtUnit, txtTimKiem;
 
     @FXML
     private Label lblTongSP;
@@ -31,11 +31,9 @@ public class DSSP_DichVuController {
     public void initialize() {
         // Bind các cột với thuộc tính của Product
         colId.setCellValueFactory(cell -> cell.getValue().idProperty());
-        colSupplierId.setCellValueFactory(cell -> cell.getValue().supplierIdProperty());
         colCategoryId.setCellValueFactory(cell -> cell.getValue().categoryIdProperty());
         colName.setCellValueFactory(cell -> cell.getValue().nameProperty());
         colUnit.setCellValueFactory(cell -> cell.getValue().unitProperty());
-
         loadProducts(); // load dữ liệu từ database
 
         // ------------------ Kết nối database ------------------
@@ -55,7 +53,6 @@ public class DSSP_DichVuController {
             while(rs.next()) {
                 productList.add(new Product(
                         rs.getString("id"),
-                        rs.getString("supplierId"),
                         rs.getString("categoryId"),
                         rs.getString("name"),
                         rs.getString("unit")
@@ -74,21 +71,19 @@ public class DSSP_DichVuController {
     @FXML
     private void themSanPham() {
         String id = txtId.getText();
-        String supplierId = txtSupplierId.getText();
         String categoryId = txtCategoryId.getText();
         String name = txtName.getText();
         String unit = txtUnit.getText();
 
-        String sql = "INSERT INTO sanpham(id, supplierId, categoryId, name, unit) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO sanpham(id, categoryId, name, unit) VALUES (?, ?, ?, ?)";
 
         try(Connection conn = Database.getConnection();
             PreparedStatement pst = conn.prepareStatement(sql)) {
 
             pst.setString(1, id);
-            pst.setString(2, supplierId);
-            pst.setString(3, categoryId);
-            pst.setString(4, name);
-            pst.setString(5, unit);
+            pst.setString(2, categoryId);
+            pst.setString(3, name);
+            pst.setString(4, unit);
 
             int result = pst.executeUpdate();
             if(result > 0) {
@@ -105,42 +100,61 @@ public class DSSP_DichVuController {
 
 
     // ------------------ Sửa sản phẩm ------------------
+    private boolean isEditing = false;
+
     @FXML
     private void suaSanPham() {
         Product selected = tableSanPham.getSelectionModel().getSelectedItem();
-        if(selected == null) return;
+        if(selected == null) {
+            System.out.println("Vui lòng chọn sản phẩm để sửa!");
+            return;
+        }
 
-        String supplierId = txtSupplierId.getText();
-        String categoryId = txtCategoryId.getText();
-        String name = txtName.getText();
-        String unit = txtUnit.getText();
+        if(!isEditing) {
+            // Bước 1: điền dữ liệu lên TextField để chỉnh sửa
+            txtId.setText(selected.getId());
+            txtId.setEditable(false); // khóa ID
+            txtCategoryId.setText(selected.getCategoryId());
+            txtName.setText(selected.getName());
+            txtUnit.setText(selected.getUnit());
 
-        String sql = "UPDATE sanpham SET supplierId=?, categoryId=?, name=?, unit=? WHERE id=?";
+            isEditing = true; // chuyển sang trạng thái đang sửa
+            System.out.println("Chỉnh sửa sản phẩm: thay đổi TextField và nhấn lại nút Sửa để lưu.");
+        } else {
+            // Bước 2: lấy dữ liệu từ TextField và cập nhật database
+            String categoryId = txtCategoryId.getText();
+            String name = txtName.getText();
+            String unit = txtUnit.getText();
 
-        try(Connection conn = Database.getConnection();
-            PreparedStatement pst = conn.prepareStatement(sql)) {
+            String sql = "UPDATE sanpham SET categoryId=?, name=?, unit=? WHERE id=?";
 
-            pst.setString(1, supplierId);
-            pst.setString(2, categoryId);
-            pst.setString(3, name);
-            pst.setString(4, unit);
-            pst.setString(5, selected.getId());
+            try(Connection conn = Database.getConnection();
+                PreparedStatement pst = conn.prepareStatement(sql)) {
 
-            int result = pst.executeUpdate();
-            if(result > 0) {
-                selected.setSupplierId(supplierId);
-                selected.setCategoryId(categoryId);
-                selected.setName(name);
-                selected.setUnit(unit);
-                tableSanPham.refresh();
-                clearFields();
-                System.out.println("Sửa sản phẩm thành công");
+                pst.setString(1, categoryId);
+                pst.setString(2, name);
+                pst.setString(3, unit);
+                pst.setString(4, selected.getId());
+
+                int result = pst.executeUpdate();
+                if(result > 0) {
+                    // Cập nhật trực tiếp vào TableView
+                    selected.setCategoryId(categoryId);
+                    selected.setName(name);
+                    selected.setUnit(unit);
+                    tableSanPham.refresh();
+                    clearFields();
+                    System.out.println("Sửa sản phẩm thành công");
+                }
+
+            } catch(SQLException e) {
+                e.printStackTrace();
             }
 
-        } catch(SQLException e) {
-            e.printStackTrace();
+            isEditing = false; // reset trạng thái
         }
     }
+
 
     // ------------------ Xóa sản phẩm ------------------
     @FXML
@@ -182,7 +196,6 @@ public class DSSP_DichVuController {
             while(rs.next()) {
                 list.add(new Product(
                         rs.getString("id"),
-                        rs.getString("supplierId"),
                         rs.getString("categoryId"),
                         rs.getString("name"),
                         rs.getString("unit")
@@ -200,7 +213,6 @@ public class DSSP_DichVuController {
     // ------------------ Xóa trắng các TextField ------------------
     private void clearFields() {
         txtId.clear();
-        txtSupplierId.clear();
         txtCategoryId.clear();
         txtName.clear();
         txtUnit.clear();

@@ -462,7 +462,7 @@ public class MainScreenController implements Initializable {
             Tab tab1 = new Tab();
             tab1.setText("Danh sách sản phẩm");
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/DSSP_DichVu.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/menuView/DSSP_DichVu.fxml")));
             tab1.setContent(root);
             tab.getTabs().add(tab1);
 
