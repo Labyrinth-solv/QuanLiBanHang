@@ -24,16 +24,44 @@
 
     <!-- Bảng danh sách sản phẩm -->
     <center>
-        <TableView fx:id="tableSanPham" prefHeight="400" prefWidth="800" BorderPane.alignment="CENTER">
-            <columns>
-                <TableColumn fx:id="colMaSP" text="Mã SP" prefWidth="80" />
-                <TableColumn fx:id="colTenSP" text="Tên sản phẩm" prefWidth="200" />
-                <TableColumn fx:id="colLoai" text="Loại" prefWidth="150" />
-                <TableColumn fx:id="colGia" text="Giá" prefWidth="100" />
-                <TableColumn fx:id="colSoLuong" text="Số lượng" prefWidth="100" />
-            </columns>
-        </TableView>
+        <VBox spacing="5">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <!-- TableView -->
+            <TableView fx:id="tableSanPham" prefHeight="400" prefWidth="800">
+                <columns>
+                    <TableColumn fx:id="colId" text="Mã SP" prefWidth="80" />
+                    <TableColumn fx:id="colName" text="Tên sản phẩm" prefWidth="200" />
+                    <TableColumn fx:id="colCategoryId" text="Loại" prefWidth="150" />
+                    <TableColumn fx:id="colSupplierId" text="Giá" prefWidth="100" />
+                    <TableColumn fx:id="colUnit" text="Số lượng" prefWidth="100" />
+                </columns>
+            </TableView>
+
+            <!-- TextField nằm ngay dưới TableView -->
+            <VBox spacing="10">
+                <HBox spacing="10">
+                    <Label text="Mã SP:" />
+                    <TextField fx:id="txtId" />
+                    <Label text="Nhà cung cấp:" />
+                    <TextField fx:id="txtSupplierId" />
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Loại:" />
+                    <TextField fx:id="txtCategoryId" />
+                    <Label text="Tên SP:" />
+                    <TextField fx:id="txtName" />
+                    <Label text="Đơn vị:" />
+                    <TextField fx:id="txtUnit" />
+                </HBox>
+            </VBox>
+        </VBox>
     </center>
+
+
+
 
     <!-- Thanh dưới cùng -->
     <bottom>

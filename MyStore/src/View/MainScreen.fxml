@@ -7,7 +7,7 @@
 
 <BorderPane maxHeight="700.0" maxWidth="1350.0" prefHeight="700.0" prefWidth="1350.0"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="Controller.ManHinhChinhController">
+            fx:controller="Controller.MainScreenController">
 
     <center>
         <TabPane fx:id="tab" prefHeight="640.0" prefWidth="1015.0" tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">

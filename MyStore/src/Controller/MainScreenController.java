@@ -19,7 +19,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-public class ManHinhChinhController implements Initializable {
+public class MainScreenController implements Initializable {
 
     /**
      * Khai bao

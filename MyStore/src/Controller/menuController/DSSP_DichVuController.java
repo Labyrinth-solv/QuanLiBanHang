@@ -1,41 +1,208 @@
 package Controller.menuController;
 
+import Database.Database;
+import Model.Product;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.sql.*;
+
 
 public class DSSP_DichVuController {
 
     @FXML
-    private TableView<?> tableSanPham;
+    private TableView<Product> tableSanPham;
 
     @FXML
-    private TableColumn<?, ?> colMaSP, colTenSP, colLoai, colGia, colSoLuong;
+    private TableColumn<Product, String> colId, colSupplierId, colCategoryId, colName, colUnit;
 
     @FXML
-    private TextField txtTimKiem;
+    private TextField txtId, txtSupplierId, txtCategoryId, txtName, txtUnit, txtTimKiem;
 
     @FXML
     private Label lblTongSP;
 
-    // Khi nhấn nút "Tìm"
+    private ObservableList<Product> productList = FXCollections.observableArrayList();
+
+    // ------------------ Khởi tạo TableView ------------------
     @FXML
-    private void timKiemSanPham() {
-        System.out.println("Đang tìm sản phẩm: " + txtTimKiem.getText());
+    public void initialize() {
+        // Bind các cột với thuộc tính của Product
+        colId.setCellValueFactory(cell -> cell.getValue().idProperty());
+        colSupplierId.setCellValueFactory(cell -> cell.getValue().supplierIdProperty());
+        colCategoryId.setCellValueFactory(cell -> cell.getValue().categoryIdProperty());
+        colName.setCellValueFactory(cell -> cell.getValue().nameProperty());
+        colUnit.setCellValueFactory(cell -> cell.getValue().unitProperty());
+
+        loadProducts(); // load dữ liệu từ database
+
+        // ------------------ Kết nối database ------------------
     }
 
+
+
+
+    // ------------------ Load dữ liệu ------------------
+    private void loadProducts() {
+        productList.clear();
+        String sql = "SELECT * FROM sanpham";
+        try(Connection conn = Database.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+
+            while(rs.next()) {
+                productList.add(new Product(
+                        rs.getString("id"),
+                        rs.getString("supplierId"),
+                        rs.getString("categoryId"),
+                        rs.getString("name"),
+                        rs.getString("unit")
+                ));
+            }
+
+            tableSanPham.setItems(productList);
+            lblTongSP.setText("Tổng sản phẩm: " + productList.size());
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ------------------ Thêm sản phẩm ------------------
     @FXML
     private void themSanPham() {
-        System.out.println("Thêm sản phẩm mới");
+        String id = txtId.getText();
+        String supplierId = txtSupplierId.getText();
+        String categoryId = txtCategoryId.getText();
+        String name = txtName.getText();
+        String unit = txtUnit.getText();
+
+        String sql = "INSERT INTO sanpham(id, supplierId, categoryId, name, unit) VALUES (?, ?, ?, ?, ?)";
+
+        try(Connection conn = Database.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, id);
+            pst.setString(2, supplierId);
+            pst.setString(3, categoryId);
+            pst.setString(4, name);
+            pst.setString(5, unit);
+
+            int result = pst.executeUpdate();
+            if(result > 0) {
+                // Không cần add trực tiếp, chỉ load lại
+                loadProducts();
+                clearFields();
+                System.out.println("Thêm sản phẩm thành công");
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
+
+    // ------------------ Sửa sản phẩm ------------------
     @FXML
     private void suaSanPham() {
-        System.out.println("Sửa sản phẩm được chọn");
+        Product selected = tableSanPham.getSelectionModel().getSelectedItem();
+        if(selected == null) return;
+
+        String supplierId = txtSupplierId.getText();
+        String categoryId = txtCategoryId.getText();
+        String name = txtName.getText();
+        String unit = txtUnit.getText();
+
+        String sql = "UPDATE sanpham SET supplierId=?, categoryId=?, name=?, unit=? WHERE id=?";
+
+        try(Connection conn = Database.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, supplierId);
+            pst.setString(2, categoryId);
+            pst.setString(3, name);
+            pst.setString(4, unit);
+            pst.setString(5, selected.getId());
+
+            int result = pst.executeUpdate();
+            if(result > 0) {
+                selected.setSupplierId(supplierId);
+                selected.setCategoryId(categoryId);
+                selected.setName(name);
+                selected.setUnit(unit);
+                tableSanPham.refresh();
+                clearFields();
+                System.out.println("Sửa sản phẩm thành công");
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
+    // ------------------ Xóa sản phẩm ------------------
     @FXML
     private void xoaSanPham() {
-        System.out.println("Xóa sản phẩm được chọn");
+        Product selected = tableSanPham.getSelectionModel().getSelectedItem();
+        if(selected == null) return;
+
+        String sql = "DELETE FROM sanpham WHERE id=?";
+        try(Connection conn = Database.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, selected.getId());
+            int result = pst.executeUpdate();
+            if(result > 0) {
+                productList.remove(selected);
+                tableSanPham.refresh();
+                lblTongSP.setText("Tổng sản phẩm: " + productList.size());
+                clearFields();
+                System.out.println("Xóa sản phẩm thành công");
+            }
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ------------------ Tìm kiếm sản phẩm ------------------
+    @FXML
+    private void timKiemSanPham() {
+        String keyword = txtTimKiem.getText();
+        ObservableList<Product> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM sanpham WHERE name LIKE ?";
+
+        try(Connection conn = Database.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, "%" + keyword + "%");
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()) {
+                list.add(new Product(
+                        rs.getString("id"),
+                        rs.getString("supplierId"),
+                        rs.getString("categoryId"),
+                        rs.getString("name"),
+                        rs.getString("unit")
+                ));
+            }
+
+            tableSanPham.setItems(list);
+            lblTongSP.setText("Tổng sản phẩm: " + list.size());
+
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ------------------ Xóa trắng các TextField ------------------
+    private void clearFields() {
+        txtId.clear();
+        txtSupplierId.clear();
+        txtCategoryId.clear();
+        txtName.clear();
+        txtUnit.clear();
     }
 }
-
