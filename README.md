@@ -12,5 +12,7 @@ Thanh toán đơn hàng
 -Sửa user và password bằng tài khoản mysql
 
 <img width="771" height="342" alt="image" src="https://github.com/user-attachments/assets/3522453b-eddb-43df-b0d9-66d9aa5a7ff2" />
+
+
 tên dn: admin
 mk: admin
