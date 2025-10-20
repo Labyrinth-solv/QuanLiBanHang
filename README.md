@@ -21,3 +21,6 @@ Thanh toán đơn hàng
 
 tên dn: admin
 mk: admin
+
+
+  -Chạy file TestMySQL để kiểm tra kết nối
