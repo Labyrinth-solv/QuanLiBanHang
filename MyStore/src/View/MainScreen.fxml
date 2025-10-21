@@ -36,7 +36,7 @@
                         <Button fx:id="btnDanhSachSanPham_DichVu" prefHeight="35.0" prefWidth="170.0"
                                 style="-fx-background-color: transparent;" text="Danh sách sản phẩm"/>
                         <Button fx:id="btnHoaDon_DichVu" prefHeight="35.0" prefWidth="170.0"
-                                style="-fx-background-color: transparent;" text="Hóa đơn thanh toán"/>
+                                style="-fx-background-color: transparent;" text="Thanh toán"/>
                     </VBox>
                 </TitledPane>
 

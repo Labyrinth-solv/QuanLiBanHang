@@ -15,10 +15,14 @@ public class DSSP_DichVuController {
     private TableView<Product> tableSanPham;
 
     @FXML
-    private TableColumn<Product, String> colId, colCategoryId, colName, colUnit, colPrice;
+    private TableColumn<Product, String> colId, colCategoryId, colName;
+    @FXML
+    private TableColumn<Product, Double> colPrice;
+    @FXML
+    private TableColumn<Product, Integer> colStock;
 
     @FXML
-    private TextField txtId, txtCategoryId, txtName, txtUnit, txtPrice, txtTimKiem;
+    private TextField txtId, txtCategoryId, txtName, txtPrice, txtStock, txtTimKiem;
 
     @FXML
     private Label lblTongSP;
@@ -29,13 +33,13 @@ public class DSSP_DichVuController {
     // ------------------ Khởi tạo TableView ------------------
     @FXML
     public void initialize() {
-        // Bind các cột với thuộc tính của Product
         colId.setCellValueFactory(cell -> cell.getValue().idProperty());
         colCategoryId.setCellValueFactory(cell -> cell.getValue().categoryIdProperty());
         colName.setCellValueFactory(cell -> cell.getValue().nameProperty());
-        colUnit.setCellValueFactory(cell -> cell.getValue().unitProperty());
-        colPrice.setCellValueFactory(cell -> cell.getValue().priceProperty());
-        loadProducts(); // load dữ liệu từ database
+        colPrice.setCellValueFactory(cell -> cell.getValue().priceProperty().asObject()); // double
+        colStock.setCellValueFactory(cell -> cell.getValue().stockProperty().asObject()); // int
+
+        loadProducts();
     }
 
     // ------------------ Load dữ liệu ------------------
@@ -51,8 +55,8 @@ public class DSSP_DichVuController {
                         rs.getString("id"),
                         rs.getString("categoryId"),
                         rs.getString("name"),
-                        rs.getString("unit"),
-                        rs.getString("price")
+                        rs.getDouble("price"),  // 🔹 price trước
+                        rs.getInt("stock")      // 🔹 stock sau
                 ));
             }
 
@@ -67,30 +71,34 @@ public class DSSP_DichVuController {
     // ------------------ Thêm sản phẩm ------------------
     @FXML
     private void themSanPham() {
-        String id = txtId.getText();
-        String categoryId = txtCategoryId.getText();
-        String name = txtName.getText();
-        String unit = txtUnit.getText();
-        String price = txtPrice.getText();
+        try {
+            String id = txtId.getText();
+            String categoryId = txtCategoryId.getText();
+            String name = txtName.getText();
+            double price = Double.parseDouble(txtPrice.getText());
+            int stock = Integer.parseInt(txtStock.getText());
 
-        String sql = "INSERT INTO sanpham(id, categoryId, name, unit, price) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO sanpham(id, categoryId, name, price, stock) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = Database.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+            try (Connection conn = Database.getConnection();
+                 PreparedStatement pst = conn.prepareStatement(sql)) {
 
-            pst.setString(1, id);
-            pst.setString(2, categoryId);
-            pst.setString(3, name);
-            pst.setString(4, unit);
-            pst.setString(5, price);
+                pst.setString(1, id);
+                pst.setString(2, categoryId);
+                pst.setString(3, name);
+                pst.setDouble(4, price);
+                pst.setInt(5, stock);
 
-            int result = pst.executeUpdate();
-            if (result > 0) {
-                loadProducts();
-                clearFields();
-                System.out.println("Thêm sản phẩm thành công");
+                int result = pst.executeUpdate();
+                if (result > 0) {
+                    loadProducts();
+                    clearFields();
+                    System.out.println("Thêm sản phẩm thành công");
+                }
+
             }
-
+        } catch (NumberFormatException e) {
+            showAlert("Vui lòng nhập đúng định dạng số cho giá và số lượng!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -101,54 +109,54 @@ public class DSSP_DichVuController {
     private void suaSanPham() {
         Product selected = tableSanPham.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            System.out.println("Vui lòng chọn sản phẩm để sửa!");
+            showAlert("Vui lòng chọn sản phẩm để sửa!");
             return;
         }
 
         if (!isEditing) {
-            // Bước 1: điền dữ liệu lên TextField để chỉnh sửa
             txtId.setText(selected.getId());
             txtId.setEditable(false);
             txtCategoryId.setText(selected.getCategoryId());
             txtName.setText(selected.getName());
-            txtUnit.setText(selected.getUnit());
-            txtPrice.setText(selected.getPrice());
+            txtPrice.setText(String.valueOf(selected.getPrice()));
+            txtStock.setText(String.valueOf(selected.getStock()));
 
             isEditing = true;
-            System.out.println("Chỉnh sửa sản phẩm: thay đổi TextField và nhấn lại nút Sửa để lưu.");
+            showAlert("Nhập lại thông tin mới");
         } else {
-            // Bước 2: cập nhật database
-            String categoryId = txtCategoryId.getText();
-            String name = txtName.getText();
-            String unit = txtUnit.getText();
-            String price = txtPrice.getText();
+            try {
+                String categoryId = txtCategoryId.getText();
+                String name = txtName.getText();
+                double price = Double.parseDouble(txtPrice.getText());
+                int stock = Integer.parseInt(txtStock.getText());
 
-            String sql = "UPDATE sanpham SET categoryId=?, name=?, unit=?, price=? WHERE id=?";
+                String sql = "UPDATE sanpham SET categoryId=?, name=?, price=?, stock=? WHERE id=?";
 
-            try (Connection conn = Database.getConnection();
-                 PreparedStatement pst = conn.prepareStatement(sql)) {
+                try (Connection conn = Database.getConnection();
+                     PreparedStatement pst = conn.prepareStatement(sql)) {
 
-                pst.setString(1, categoryId);
-                pst.setString(2, name);
-                pst.setString(3, unit);
-                pst.setString(4, price);
-                pst.setString(5, selected.getId());
+                    pst.setString(1, categoryId);
+                    pst.setString(2, name);
+                    pst.setDouble(3, price);
+                    pst.setInt(4, stock);
+                    pst.setString(5, selected.getId());
 
-                int result = pst.executeUpdate();
-                if (result > 0) {
-                    selected.setCategoryId(categoryId);
-                    selected.setName(name);
-                    selected.setUnit(unit);
-                    selected.setPrice(price);
-                    tableSanPham.refresh();
-                    clearFields();
-                    System.out.println("Sửa sản phẩm thành công");
+                    int result = pst.executeUpdate();
+                    if (result > 0) {
+                        selected.setCategoryId(categoryId);
+                        selected.setName(name);
+                        selected.setPrice(price);
+                        selected.setStock(stock);
+                        tableSanPham.refresh();
+                        clearFields();
+                        System.out.println("Sửa sản phẩm thành công");
+                    }
                 }
-
+            } catch (NumberFormatException e) {
+                showAlert("Giá hoặc số lượng không hợp lệ!");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
             isEditing = false;
         }
     }
@@ -195,8 +203,8 @@ public class DSSP_DichVuController {
                         rs.getString("id"),
                         rs.getString("categoryId"),
                         rs.getString("name"),
-                        rs.getString("unit"),
-                        rs.getString("price")
+                        rs.getDouble("price"),
+                        rs.getInt("stock")
                 ));
             }
 
@@ -208,14 +216,22 @@ public class DSSP_DichVuController {
         }
     }
 
-    // ------------------ Xóa trắng các TextField ------------------
+    // ------------------ Xóa trắng TextField ------------------
     private void clearFields() {
         txtId.clear();
         txtCategoryId.clear();
         txtName.clear();
-        txtUnit.clear();
         txtPrice.clear();
+        txtStock.clear();
         txtId.setEditable(true);
         isEditing = false;
+    }
+
+    // ------------------ Thông báo ------------------
+    private void showAlert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }

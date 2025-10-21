@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.menuController.ThanhToanController">
+
+    <!-- 🔹 KHU TRÊN: Danh sách sản phẩm -->
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="12" right="12" bottom="8" left="12"/>
+            </padding>
+
+            <Label text="DANH SÁCH SẢN PHẨM"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <!-- Bảng sản phẩm -->
+            <TableView fx:id="tableSanPham" prefHeight="220">
+                <columns>
+                    <TableColumn fx:id="colId" text="Mã SP" prefWidth="100"/>
+                    <TableColumn fx:id="colName" text="Tên sản phẩm" prefWidth="200"/>
+                    <TableColumn fx:id="colPrice" text="Đơn giá" prefWidth="120"/>
+                    <TableColumn fx:id="colStock" text="Tồn kho" prefWidth="100"/>
+                </columns>
+            </TableView>
+
+            <!-- Thêm vào giỏ -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <padding>
+                    <Insets top="5" bottom="5"/>
+                </padding>
+                <Label text="Số lượng:"/>
+                <Spinner fx:id="spSoLuong" prefWidth="90"/>
+                <Button text="Thêm vào giỏ" onAction="#themVaoGio"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- 🔹 KHU GIỮA: Giỏ hàng -->
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="8" right="12" bottom="8" left="12"/>
+            </padding>
+
+            <Label text="GIỎ HÀNG"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <!-- Bảng giỏ hàng -->
+            <TableView fx:id="tableGioHang" prefHeight="220">
+                <columns>
+                    <TableColumn fx:id="colGHName" text="Tên sản phẩm" prefWidth="200"/>
+                    <TableColumn fx:id="colGHSoLuong" text="Số lượng" prefWidth="100"/>
+                    <TableColumn fx:id="colGHDGia" text="Đơn giá" prefWidth="120"/>
+                    <TableColumn fx:id="colGHThanhTien" text="Thành tiền" prefWidth="150"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- 🔹 KHU DƯỚI: Tổng tiền & nút chức năng -->
+    <bottom>
+        <HBox spacing="12" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="12" bottom="12" left="12"/>
+            </padding>
+
+            <Label text="Tổng tiền:"/>
+            <TextField fx:id="txtTongTien" editable="false" prefWidth="140"/>
+
+            <Button text="Xóa giỏ hàng" onAction="#xoaGioHang"/>
+            <Button text="Thanh toán" onAction="#thanhToan"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

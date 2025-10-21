@@ -81,8 +81,8 @@ CREATE TABLE `sanpham` (
   `id` varchar(50) NOT NULL,
   `categoryId` varchar(50) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL,
-  `unit` varchar(50) DEFAULT NULL,
-  `price` decimal(10,2) DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  `stock` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -93,7 +93,7 @@ CREATE TABLE `sanpham` (
 
 LOCK TABLES `sanpham` WRITE;
 /*!40000 ALTER TABLE `sanpham` DISABLE KEYS */;
-INSERT INTO `sanpham` VALUES ('','','','',NULL),('1','Sách','OOP1','5',NULL),('2','Sách','Đại Số','5',1000.00);
+INSERT INTO `sanpham` VALUES ('','','',NULL,NULL),('1','SÁCH','OOP',100000.1,10),('2','Sách','Đại Số',1000,4);
 /*!40000 ALTER TABLE `sanpham` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,4 +130,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-21 10:46:58
+-- Dump completed on 2025-10-21 20:01:37

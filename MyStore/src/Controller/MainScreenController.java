@@ -436,26 +436,30 @@ public class MainScreenController implements Initializable {
     }
 
     private void hienThiHoaDon() throws IOException {
-        if(flagForHoaDon == -1) {
+        if (flagForHoaDon == -1) {
             Tab tab1 = new Tab();
-            tab1.setText("Hóa đơn");
+            tab1.setText("Thanh toán"); // Tên tab hiển thị trên giao diện
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/HoaDon.fxml")));
+            // ✅ Đường dẫn đến file FXML của giao diện thanh toán
+            Parent root = FXMLLoader.load(Objects.requireNonNull(
+                    getClass().getResource("/View/menuView/ThanhToan.fxml")
+            ));
             tab1.setContent(root);
             tab.getTabs().add(tab1);
 
             flagForTab++;
             flagForHoaDon = flagForTab;
 
-            tab1.setOnCloseRequest(e->{
-                flagForTab --;
+            tab1.setOnCloseRequest(e -> {
+                flagForTab--;
                 flagForHoaDon = -1;
             });
         }
 
+        // ✅ Chuyển sang tab Thanh toán
         selectionModel.select(flagForHoaDon);
-
     }
+
 
     private void hienThiDSSP_DichVu() throws IOException {
         if(flagForDSSP_DichVu == -1) {
