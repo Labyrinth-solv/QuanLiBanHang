@@ -11,6 +11,7 @@ module MyStore {
     opens Controller to javafx.fxml;
     opens View to javafx.fxml;
     opens Controller.menuController to javafx.fxml;
+    opens View.menuView to javafx.fxml;
 
     exports Controller;
     exports Start;
