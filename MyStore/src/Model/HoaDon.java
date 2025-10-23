@@ -1,17 +1,18 @@
 package Model;
 
 import javafx.beans.property.*;
+
 import java.time.LocalDateTime;
 
 public class HoaDon {
-    private final IntegerProperty maHD = new SimpleIntegerProperty();
-    private final ObjectProperty<LocalDateTime> ngayLap = new SimpleObjectProperty<>();
-    private final DoubleProperty tongTien = new SimpleDoubleProperty();
+    private final IntegerProperty maHD;
+    private final ObjectProperty<LocalDateTime> ngayLap;
+    private final DoubleProperty tongTien;
 
     public HoaDon(int maHD, LocalDateTime ngayLap, double tongTien) {
-        this.maHD.set(maHD);
-        this.ngayLap.set(ngayLap);
-        this.tongTien.set(tongTien);
+        this.maHD = new SimpleIntegerProperty(maHD);
+        this.ngayLap = new SimpleObjectProperty<>(ngayLap);
+        this.tongTien = new SimpleDoubleProperty(tongTien);
     }
 
     public int getMaHD() { return maHD.get(); }

@@ -263,7 +263,7 @@ public class MainScreenController implements Initializable {
             Tab tab1 = new Tab();
             tab1.setText("Danh sách hóa đơn");
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/DSHoaDon.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/menuView/DSHoaDon.fxml")));
             tab1.setContent(root);
             tab.getTabs().add(tab1);
 
@@ -308,7 +308,7 @@ public class MainScreenController implements Initializable {
             Tab tab1 = new Tab();
             tab1.setText("Báo cáo doanh thu");
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/BaoCaoDoanhThu.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/menuView/DoanhThu.fxml")));
             tab1.setContent(root);
             tab.getTabs().add(tab1);
 
@@ -435,6 +435,7 @@ public class MainScreenController implements Initializable {
 
     }
 
+        // TƯƠNG ỨNG VỚI ThanhToan.fxml
     private void hienThiHoaDon() throws IOException {
         if (flagForHoaDon == -1) {
             Tab tab1 = new Tab();

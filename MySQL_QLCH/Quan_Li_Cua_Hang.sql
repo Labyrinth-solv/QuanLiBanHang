@@ -34,7 +34,7 @@ CREATE TABLE `chitiethoadon` (
   PRIMARY KEY (`id`),
   KEY `mahd` (`mahd`),
   CONSTRAINT `chitiethoadon_ibfk_1` FOREIGN KEY (`mahd`) REFERENCES `hoadon` (`mahd`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `chitiethoadon` (
 
 LOCK TABLES `chitiethoadon` WRITE;
 /*!40000 ALTER TABLE `chitiethoadon` DISABLE KEYS */;
+INSERT INTO `chitiethoadon` VALUES (1,1,'Đại Số',1,1000,1000),(2,1,'Xiaomi',1,10000,10000),(3,2,'Đại Số',1,1000,1000),(4,2,'Xiaomi',1,10000,10000),(5,3,'Đại Số',1,1000,1000),(6,3,'OOP',1,100000.1,100000.1);
 /*!40000 ALTER TABLE `chitiethoadon` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +59,7 @@ CREATE TABLE `hoadon` (
   `ngaylap` datetime DEFAULT NULL,
   `tongtien` double DEFAULT NULL,
   PRIMARY KEY (`mahd`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +68,7 @@ CREATE TABLE `hoadon` (
 
 LOCK TABLES `hoadon` WRITE;
 /*!40000 ALTER TABLE `hoadon` DISABLE KEYS */;
+INSERT INTO `hoadon` VALUES (1,'2025-10-21 20:23:39',11000),(2,'2025-10-21 21:17:38',11000),(3,'2025-10-21 21:17:55',101000.1);
 /*!40000 ALTER TABLE `hoadon` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +95,7 @@ CREATE TABLE `sanpham` (
 
 LOCK TABLES `sanpham` WRITE;
 /*!40000 ALTER TABLE `sanpham` DISABLE KEYS */;
-INSERT INTO `sanpham` VALUES ('','','',NULL,NULL),('1','SÁCH','OOP',100000.1,10),('2','Sách','Đại Số',1000,4);
+INSERT INTO `sanpham` VALUES ('','','',NULL,NULL),('1','SÁCH','OOP',100000.1,9),('2','Sách','Đại Số',1000,1),('3','Phone','Xiaomi',10000,0),('4','Tiền','500k',1000,100),('5','Xe máy','Honda',5000,1),('6','ô Tô','RollRoyce',600,1000),('7','Mì tôm','Hảo Hảo',5000,10);
 /*!40000 ALTER TABLE `sanpham` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -130,4 +132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-21 20:01:37
+-- Dump completed on 2025-10-21 21:37:45

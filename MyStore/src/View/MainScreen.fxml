@@ -17,6 +17,7 @@
         </TabPane>
     </center>
 
+    <!-- Cột bên trái -->
     <left>
         <HBox prefHeight="660.0" prefWidth="295.0" spacing="10.0" BorderPane.alignment="CENTER">
             <padding>
@@ -81,22 +82,29 @@
                     </VBox>
                 </TitledPane>
 
-                <!-- Tìm kiếm -->
-                <TitledPane collapsible="false" prefHeight="114.0" prefWidth="250.0" text="Tìm kiếm">
-                    <VBox spacing="5.0">
-                        <padding>
-                            <Insets top="5.0" right="5.0" bottom="5.0" left="5.0"/>
-                        </padding>
-                        <Button fx:id="btnDanhSachHoaDon" prefHeight="35.0" prefWidth="170.0"
-                                style="-fx-background-color: transparent;" text="Danh sách hóa đơn"/>
-                        <Button fx:id="btnDSNhaCungCap" prefHeight="35.0" prefWidth="170.0"
-                                style="-fx-background-color: transparent;" text="Danh sách nhà cung cấp"/>
-                    </VBox>
-                </TitledPane>
-
             </VBox>
         </HBox>
     </left>
+
+    <!-- Cột bên phải (Tìm kiếm) -->
+    <right>
+        <VBox alignment="TOP_CENTER" spacing="10.0" prefWidth="270.0" prefHeight="630.0" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets top="15.0" right="15.0" bottom="15.0" left="10.0"/>
+            </padding>
+            <TitledPane collapsible="false" prefHeight="114.0" prefWidth="250.0" text="Tìm kiếm">
+                <VBox spacing="5.0">
+                    <padding>
+                        <Insets top="5.0" right="5.0" bottom="5.0" left="5.0"/>
+                    </padding>
+                    <Button fx:id="btnDanhSachHoaDon" prefHeight="35.0" prefWidth="170.0"
+                            style="-fx-background-color: transparent;" text="Danh sách hóa đơn"/>
+                    <Button fx:id="btnDSNhaCungCap" prefHeight="35.0" prefWidth="170.0"
+                            style="-fx-background-color: transparent;" text="Danh sách nhà cung cấp"/>
+                </VBox>
+            </TitledPane>
+        </VBox>
+    </right>
 
     <bottom>
         <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="1350.0"

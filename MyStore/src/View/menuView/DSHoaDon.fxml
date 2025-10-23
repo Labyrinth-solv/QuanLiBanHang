@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.menuController.DSHoaDonController">
+
+    <!-- TOP: Tiêu đề -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f0f0f0;">
+            <padding>
+                <Insets top="12" right="12" bottom="12" left="12"/>
+            </padding>
+            <Label text="📄 DANH SÁCH HÓA ĐƠN" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER: Bảng hóa đơn -->
+    <center>
+        <TableView fx:id="tableHoaDon" prefHeight="400">
+            <columns>
+                <TableColumn fx:id="colMaHD" text="Mã hóa đơn" prefWidth="100"/>
+                <TableColumn fx:id="colNgayLap" text="Ngày lập" prefWidth="150"/>
+                <TableColumn fx:id="colTongTien" text="Tổng tiền" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <!-- BOTTOM: Nút điều khiển -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="12" style="-fx-background-color: #f0f0f0;">
+            <padding>
+                <Insets top="12" right="20" bottom="12" left="20"/>
+            </padding>
+
+            <Button text="Xóa hóa đơn" onAction="#xoaHoaDon"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
