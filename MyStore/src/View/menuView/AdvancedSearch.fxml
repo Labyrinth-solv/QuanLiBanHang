@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.menuController.AdvancedSearchController">
+   <children>
+      <VBox layoutY="7.0" prefHeight="250.0" prefWidth="700.0" spacing="10.0">
+         <children>
+            <Label prefHeight="26.0" prefWidth="255.0" style="-fx-font-weight: bold; -fx-font-size: 16;" text="🔍 Tìm kiếm sản phẩm nâng cao">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="20.0" prefWidth="700.0" spacing="10.0">
+               <children>
+                  <Label text="Từ khóa:" />
+                  <TextField prefWidth="200.0" promptText="Tên hoặc mã sản phẩm" />
+                  <Label text="Danh mục: " />
+                  <ComboBox prefWidth="150.0" />
+               </children></HBox>
+            <HBox prefHeight="26.0" prefWidth="627.0" spacing="10.0">
+               <children>
+                  <Label text="Giá từ: " />
+                  <TextField prefHeight="26.0" prefWidth="100.0" promptText="VND" />
+                  <Label prefHeight="18.0" prefWidth="32.0" text="đến:" />
+                  <TextField promptText="VND" />
+                  <Label text="Trạng thái" />
+                  <ComboBox prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="0.0" prefWidth="700.0" spacing="10.0">
+               <children>
+                  <Label text="Ngày nhập:" />
+                  <DatePicker />
+                  <Label text="đến: " />
+                  <DatePicker />
+               </children>
+            </HBox>
+            <HBox prefHeight="31.0" prefWidth="700.0" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" text="🔍 Tìm kiếm" />
+                  <Button mnemonicParsing="false" text="Xóa lọc" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets top="15.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
