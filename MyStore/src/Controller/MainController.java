@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
+import javafx.scene.control.*;
 import org.json.JSONObject;
 
 import javafx.application.Platform;
@@ -22,10 +23,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
@@ -42,7 +39,7 @@ public class MainController implements Initializable {
     private Button btnDangNhap, btnThoat;
 
     @FXML
-    private Text txtLoiDangNhap;
+    private Label txtLoiDangNhap;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {

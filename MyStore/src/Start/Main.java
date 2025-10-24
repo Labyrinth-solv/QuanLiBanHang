@@ -16,7 +16,7 @@ public class Main extends Application {
         try {
             GridPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/Main.fxml")));
             Scene scene = new Scene(root,500,200);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/View/application.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/View/css/application.css")).toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
 

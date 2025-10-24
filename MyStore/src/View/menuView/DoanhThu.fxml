@@ -7,18 +7,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.chart.LineChart?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="Controller.menuController.DoanhThuController"
-            prefWidth="950" prefHeight="600">
+            prefWidth="1000" prefHeight="650">
 
     <!-- Thanh tiêu đề -->
     <top>
-        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50;">
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              style="-fx-background-color: #2c3e50;">
             <padding>
-                <Insets top="12" right="12" bottom="12" left="12" />
+                <Insets top="15" right="15" bottom="15" left="15" />
             </padding>
-            <Label text="📊 Báo cáo doanh thu"
-                   style="-fx-font-size: 20px; -fx-text-fill: white; -fx-font-weight: bold;" />
+            <Label text="📊 Báo cáo doanh thu theo tháng"
+                   style="-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold;" />
         </HBox>
     </top>
 
@@ -26,49 +28,60 @@
     <center>
         <VBox spacing="15">
             <padding>
-                <Insets top="15" right="15" bottom="15" left="15" />
+                <Insets top="15" right="20" bottom="15" left="20" />
             </padding>
 
-            <!-- Bộ lọc thời gian -->
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="Từ ngày:"/>
-                <DatePicker fx:id="dateFrom"/>
+            <!-- Bộ lọc & nút chức năng -->
+            <HBox spacing="20" alignment="CENTER_LEFT"
+                  style="-fx-padding: 10; -fx-background-color: #ecf0f1;
+                         -fx-border-color: #bdc3c7; -fx-border-radius: 5;">
 
-                <Label text="Đến ngày:"/>
-                <DatePicker fx:id="dateTo"/>
+                <Label text="Chọn tháng:" style="-fx-font-weight: bold;" />
+                <ChoiceBox fx:id="cbThang" prefWidth="100" />
 
                 <Button fx:id="btnThongKe" text="Thống kê"
-                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold;" />
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                               -fx-font-weight: bold; -fx-background-radius: 5;" />
 
                 <Button fx:id="btnLamMoi" text="Làm mới"
-                        style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-font-weight: bold;" />
+                        style="-fx-background-color: #2980b9; -fx-text-fill: white;
+                               -fx-font-weight: bold; -fx-background-radius: 5;" />
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <Button fx:id="btnXuatExcel" text="Xuất Excel"
+                        style="-fx-background-color: #8e44ad; -fx-text-fill: white;
+                               -fx-font-weight: bold; -fx-background-radius: 5;" />
             </HBox>
 
             <!-- Tổng doanh thu -->
-            <HBox spacing="10" alignment="CENTER_RIGHT">
+            <HBox alignment="CENTER_RIGHT" spacing="10"
+                  style="-fx-background-color: #fdf2e9; -fx-padding: 10;
+                         -fx-border-color: #f5cba7; -fx-border-radius: 5;">
                 <Label text="Tổng doanh thu:"
-                       style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+                       style="-fx-font-size: 18px; -fx-font-weight: bold;" />
                 <Label fx:id="lblTongDoanhThu" text="0 VNĐ"
-                       style="-fx-font-size: 16px; -fx-text-fill: #e74c3c; -fx-font-weight: bold;" />
+                       style="-fx-font-size: 18px; -fx-text-fill: #d35400;
+                              -fx-font-weight: bold;" />
             </HBox>
 
             <!-- Biểu đồ doanh thu -->
-            <BarChart fx:id="barChartDoanhThu"
-                      title="Doanh thu theo ngày"
-                      prefHeight="300"
-                      animated="true">
+            <LineChart fx:id="lineChartDoanhThu"
+                       title="Doanh thu theo tháng"
+                       prefHeight="300">
                 <xAxis>
-                    <CategoryAxis label="Ngày"/>
+                    <CategoryAxis label="Ngày" />
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Doanh thu (VNĐ)"/>
+                    <NumberAxis label="Doanh thu (VNĐ)" />
                 </yAxis>
-            </BarChart>
+            </LineChart>
 
-            <!-- Bảng chi tiết hóa đơn -->
+
+            <!-- Bảng chi tiết -->
             <TableView fx:id="tableDoanhThu" prefHeight="200">
                 <columns>
-                    <TableColumn fx:id="colNgay" text="Ngày" prefWidth="180"/>
+                    <TableColumn fx:id="colNgay" text="Ngày" prefWidth="150"/>
                     <TableColumn fx:id="colSoHoaDon" text="Số hóa đơn" prefWidth="200"/>
                     <TableColumn fx:id="colTongTien" text="Tổng tiền (VNĐ)" prefWidth="250"/>
                 </columns>

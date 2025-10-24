@@ -14,66 +14,85 @@ import java.time.LocalDate;
 public class DoanhThuController {
 
     @FXML
-    private DatePicker dateFrom, dateTo;
+    private ChoiceBox<Integer> cbThang;
+
     @FXML
-    private Button btnThongKe, btnLamMoi;
+    private Button btnThongKe, btnLamMoi, btnXuatExcel;
+
     @FXML
     private Label lblTongDoanhThu;
+
     @FXML
     private TableView<DoanhThu> tableDoanhThu;
+
     @FXML
     private TableColumn<DoanhThu, String> colNgay;
+
     @FXML
     private TableColumn<DoanhThu, Integer> colSoHoaDon;
+
     @FXML
     private TableColumn<DoanhThu, Double> colTongTien;
+
     @FXML
-    private BarChart<String, Number> barChartDoanhThu;
+    private LineChart<String, Number> lineChartDoanhThu;
 
     private ObservableList<DoanhThu> dataList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        colNgay.setCellValueFactory(cellData -> cellData.getValue().ngayProperty());
-        colSoHoaDon.setCellValueFactory(cellData -> cellData.getValue().soHoaDonProperty().asObject());
-        colTongTien.setCellValueFactory(cellData -> cellData.getValue().tongTienProperty().asObject());
 
+        // Render cột
+        colNgay.setCellValueFactory(cell -> cell.getValue().ngayProperty());
+        colSoHoaDon.setCellValueFactory(cell -> cell.getValue().soHoaDonProperty().asObject());
+        colTongTien.setCellValueFactory(cell -> cell.getValue().tongTienProperty().asObject());
+
+        // Thêm tháng 1 → 12
+        for (int i = 1; i <= 12; i++)
+            cbThang.getItems().add(i);
+
+        // Chọn tháng hiện tại
+        cbThang.setValue(LocalDate.now().getMonthValue());
+
+        // Sự kiện
         btnThongKe.setOnAction(e -> thongKe());
         btnLamMoi.setOnAction(e -> lamMoi());
+
+        // Load mặc định
+        thongKe();
     }
 
     private void thongKe() {
-        LocalDate from = dateFrom.getValue();
-        LocalDate to = dateTo.getValue();
+        Integer month = cbThang.getValue();
 
-        if (from == null || to == null) {
-            new Alert(Alert.AlertType.WARNING, "Vui lòng chọn khoảng thời gian!").show();
+        if (month == null) {
+            new Alert(Alert.AlertType.WARNING, "Vui lòng chọn tháng!").show();
             return;
         }
 
         dataList.clear();
 
         String sql = """
-            SELECT DATE(ngaylap) AS ngay_lap,
-                   COUNT(mahd) AS ma_hoa_don,
-                   SUM(tongtien) AS tong_tien
+            SELECT DAY(ngaylap) AS ngay,
+                   COUNT(mahd) AS sohd,
+                   SUM(tongtien) AS tong
             FROM hoadon
-            WHERE ngay_lap BETWEEN ? AND ?
-            GROUP BY DATE(ngay_lap)
-            ORDER BY ngay_lap;
+            WHERE MONTH(ngaylap) = ?
+            GROUP BY DAY(ngaylap)
+            ORDER BY ngay;
         """;
 
         try (Connection conn = Database.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setDate(1, Date.valueOf(from));
-            ps.setDate(2, Date.valueOf(to));
+            ps.setInt(1, month);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String ngay = rs.getString("ngay_lap");
-                int soHD = rs.getInt("ma_hoa_don");
-                double tong = rs.getDouble("tong_tien");
+                String ngay = String.valueOf(rs.getInt("ngay"));
+                int soHD = rs.getInt("sohd");
+                double tong = rs.getDouble("tong");
+
                 dataList.add(new DoanhThu(ngay, soHD, tong));
             }
 
@@ -82,29 +101,32 @@ public class DoanhThuController {
             updateTotal();
 
         } catch (SQLException ex) {
-            new Alert(Alert.AlertType.ERROR, "Lỗi tải dữ liệu: " + ex.getMessage()).show();
+            new Alert(Alert.AlertType.ERROR, "Không thể tải dữ liệu: " + ex.getMessage()).show();
             ex.printStackTrace();
         }
     }
 
     private void lamMoi() {
-        dateFrom.setValue(null);
-        dateTo.setValue(null);
+        cbThang.setValue(null);
         dataList.clear();
         tableDoanhThu.setItems(dataList);
-        barChartDoanhThu.getData().clear();
+        lineChartDoanhThu.getData().clear();
         lblTongDoanhThu.setText("0 VNĐ");
     }
 
     private void updateChart() {
-        barChartDoanhThu.getData().clear();
+        lineChartDoanhThu.getData().clear();
 
         XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Doanh thu");
+
         for (DoanhThu d : dataList) {
             series.getData().add(new XYChart.Data<>(d.getNgay(), d.getTongTien()));
         }
-        barChartDoanhThu.getData().add(series);
+
+        lineChartDoanhThu.getData().add(series);
     }
+
 
     private void updateTotal() {
         double total = dataList.stream().mapToDouble(DoanhThu::getTongTien).sum();
