@@ -14,16 +14,12 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-import form.DSSP_KhoForm;
-import form.NhanVienForm;
 
 
 public final class Contants {
     public static int staffId;
     public static int accountID;
     public static String staffName;
-    public static NhanVienForm nhanVienDuocChon;
-    public static DSSP_KhoForm sanPhamKhoDuocChon;
     public final static String USER_PATH = System.getProperty("user.home") + "/ministop_resources/resources/";
     public static String hoaDonChon = "";
     public static String ngay_DoanhThu = "";

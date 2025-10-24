@@ -40,22 +40,6 @@
                                 style="-fx-background-color: transparent;" text="Thanh toán"/>
                     </VBox>
                 </TitledPane>
-
-                <!-- Quản lý kho -->
-                <TitledPane collapsible="false" prefHeight="161.0" prefWidth="250.0" text="Quản lý kho">
-                    <VBox spacing="5.0">
-                        <padding>
-                            <Insets top="5.0" right="5.0" bottom="5.0" left="5.0"/>
-                        </padding>
-                        <Button fx:id="btnDanhSachSanPham_QuanLyKho" prefHeight="35.0" prefWidth="170.0"
-                                style="-fx-background-color: transparent;" text="Danh sách sản phẩm"/>
-                        <Button fx:id="btnDatHang_QuanLyKho" prefHeight="35.0" prefWidth="170.0"
-                                style="-fx-background-color: transparent;" text="Đặt hàng"/>
-                        <Button fx:id="btnNhapHang_QuanLyKho" prefHeight="35.0" prefWidth="170.0"
-                                style="-fx-background-color: transparent;" text="Nhập hàng"/>
-                    </VBox>
-                </TitledPane>
-
                 <!-- Nhân viên -->
                 <TitledPane collapsible="false" prefHeight="114.0" prefWidth="250.0" text="Nhân viên">
                     <VBox spacing="5.0">
@@ -77,8 +61,6 @@
                         </padding>
                         <Button fx:id="btnBaoCaoDoanhThu" prefHeight="35.0" prefWidth="170.0"
                                 style="-fx-background-color: transparent;" text="Doanh thu"/>
-                        <Button fx:id="btnBaoCaoNhapXuatHang" prefHeight="35.0" prefWidth="170.0"
-                                style="-fx-background-color: transparent;" text="Nhập xuất hàng"/>
                     </VBox>
                 </TitledPane>
 
@@ -99,8 +81,7 @@
                     </padding>
                     <Button fx:id="btnDanhSachHoaDon" prefHeight="35.0" prefWidth="170.0"
                             style="-fx-background-color: transparent;" text="Danh sách hóa đơn"/>
-                    <Button fx:id="btnDSNhaCungCap" prefHeight="35.0" prefWidth="170.0"
-                            style="-fx-background-color: transparent;" text="Danh sách nhà cung cấp"/>
+
                 </VBox>
             </TitledPane>
         </VBox>

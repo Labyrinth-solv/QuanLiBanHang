@@ -15,7 +15,6 @@ module MyStore {
 
     exports Controller;
     exports Start;
-    exports form;
     exports Controller.menuController;
 
 
