@@ -2,9 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Base64;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import java.sql.Connection;
@@ -14,7 +12,6 @@ import java.sql.ResultSet;
 
 
 import javafx.scene.control.*;
-import org.json.JSONObject;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -25,8 +22,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -104,7 +99,7 @@ public class MainController implements Initializable {
                     ResultSet rs = stmt.executeQuery();
                     if (rs.next()) {
                         // ✅ Đăng nhập thành công
-                        Contants.staffName = username;
+                        Constants.staffName = username;
                     } else {
                         loiDangNhap = "Sai tên đăng nhập hoặc mật khẩu!";
                     }

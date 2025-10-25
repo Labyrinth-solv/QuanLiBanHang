@@ -61,17 +61,17 @@ public class MainScreenController implements Initializable {
         String ngay = localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         txtNgay.setText(ngay);
 
-        txtTenNhanVien.setText(Contants.staffName);
+        txtTenNhanVien.setText(Constants.staffName);
 
 //        btnDanhSachSanPham_DichVu.setDisable(true);
         btnThemNhanVien.setDisable(true);
 
-        if (5==Contants.accountID) {
+        if (5== Constants.accountID) {
             btnThemNhanVien.setDisable(true);
             btnDanhSach_NhanVien.setDisable(true);
             btnBaoCaoDoanhThu.setDisable(true);
             btnDanhSachHoaDon.setDisable(true);
-        } else if (6==Contants.accountID) {
+        } else if (6== Constants.accountID) {
             btnDanhSachSanPham_DichVu.setDisable(true);
             btnHoaDon_DichVu.setDisable(true);
             btnThemNhanVien.setDisable(true);
