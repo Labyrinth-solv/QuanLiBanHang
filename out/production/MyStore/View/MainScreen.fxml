@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="700.0" maxWidth="1350.0" prefHeight="700.0" prefWidth="1350.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.MainScreenController">
+
+    <!-- Trung tâm: Mở rộng tối đa để hiển thị nội dung -->
+    <center>
+        <TabPane fx:id="tab" prefHeight="680.0" prefWidth="1250.0"
+                 tabClosingPolicy="ALL_TABS" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="3.0" right="3.0" top="10.0" />
+            </BorderPane.margin>
+        </TabPane>
+    </center>
+
+    <!-- Cột bên trái -->
+    <left>
+        <VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="270.0" spacing="10.0"
+              BorderPane.alignment="CENTER" style="-fx-background-color: #f7f7f7;">
+            <padding>
+                <Insets top="15.0" right="10.0" bottom="15.0" left="10.0"/>
+            </padding>
+
+            <!-- Dịch vụ -->
+            <TitledPane collapsible="false" prefHeight="114.0" prefWidth="250.0" text="Dịch vụ">
+                <VBox spacing="5.0">
+                    <padding>
+                        <Insets top="5.0" right="5.0" bottom="5.0" left="5.0"/>
+                    </padding>
+                    <Button fx:id="btnDanhSachSanPham_DichVu" prefHeight="35.0" prefWidth="170.0"
+                            style="-fx-background-color: transparent;" text="Danh sách sản phẩm"/>
+                    <Button fx:id="btnHoaDon_DichVu" prefHeight="35.0" prefWidth="170.0"
+                            style="-fx-background-color: transparent;" text="Thanh toán"/>
+                </VBox>
+            </TitledPane>
+
+            <!-- Nhân viên -->
+            <TitledPane collapsible="false" prefHeight="114.0" prefWidth="250.0" text="Nhân viên">
+                <VBox spacing="5.0">
+                    <padding>
+                        <Insets top="5.0" right="5.0" bottom="5.0" left="5.0"/>
+                    </padding>
+                    <Button fx:id="btnDanhSach_NhanVien" prefHeight="35.0" prefWidth="170.0"
+                            style="-fx-background-color: transparent;" text="Danh sách nhân viên"/>
+                    <Button fx:id="btnThemNhanVien" prefHeight="35.0" prefWidth="170.0"
+                            style="-fx-background-color: transparent;" text="Thêm nhân viên"/>
+                </VBox>
+            </TitledPane>
+
+            <!-- Báo cáo thu chi -->
+            <TitledPane collapsible="false" prefHeight="114.0" prefWidth="250.0" text="Báo cáo thu chi">
+                <VBox spacing="5.0">
+                    <padding>
+                        <Insets top="5.0" right="5.0" bottom="5.0" left="5.0"/>
+                    </padding>
+                    <Button fx:id="btnBaoCaoDoanhThu" prefHeight="35.0" prefWidth="170.0"
+                            style="-fx-background-color: transparent;" text="Doanh thu"/>
+                </VBox>
+            </TitledPane>
+
+            <!-- 🔹 Tìm kiếm (chuyển xuống góc dưới bên trái) -->
+            <TitledPane collapsible="false" prefHeight="114.0" prefWidth="250.0" text="Tìm kiếm">
+                <VBox spacing="5.0">
+                    <padding>
+                        <Insets top="5.0" right="5.0" bottom="5.0" left="5.0"/>
+                    </padding>
+                    <Button fx:id="btnDanhSachHoaDon" prefHeight="35.0" prefWidth="170.0"
+                            style="-fx-background-color: transparent;" text="Danh sách hóa đơn"/>
+                </VBox>
+            </TitledPane>
+
+        </VBox>
+    </left>
+
+    <!-- ĐÃ BỎ phần right để nhường chỗ cho trung tâm -->
+
+    <!-- Thanh thông tin dưới cùng -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="1350.0"
+              spacing="15.0" style="-fx-background-color: #00CCFF;">
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </padding>
+            <Text text="Ngày:"/>
+            <Text fx:id="txtNgay" fill="RED" text="26/12/1997"/>
+            <Text text="Nhân viên:"/>
+            <Text fx:id="txtTenNhanVien" fill="RED" text="Phan Thế Anh"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="Controller.menuController.DSSP_DichVuController">
+
+    <!-- Thanh trên cùng -->
+    <!-- Thanh trên cùng -->
+    <top>
+        <VBox style="-fx-background-color: #f9f9f9; -fx-border-color: #dcdcdc; -fx-border-width: 0 0 1 0;">
+            <padding>
+                <Insets top="10" right="15" bottom="10" left="15" />
+            </padding>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="🔍" style="-fx-font-size: 18;" />
+
+                <TextField fx:id="txtTimKiem" promptText="Nhập tên sản phẩm để tìm..."
+                           HBox.hgrow="ALWAYS"
+                           style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-padding: 6 12;" />
+
+                <Button text="Tìm" onAction="#timKiemSanPham"
+                        style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 20;"/>
+
+                <Button text="Tìm nâng cao" onAction="#moTimKiemNangCao"
+                        style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 20;"/>
+            </HBox>
+        </VBox>
+    </top>
+
+
+    <!-- Bảng danh sách sản phẩm -->
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <!-- TableView -->
+            <TableView fx:id="tableSanPham" prefHeight="400" prefWidth="800">
+                <columns>
+                    <TableColumn fx:id="colId" text="Mã SP" prefWidth="80" />
+                    <TableColumn fx:id="colCategoryId" text="Loại" prefWidth="150" />
+                    <TableColumn fx:id="colName" text="Tên sản phẩm" prefWidth="200" />
+                    <TableColumn fx:id="colPrice" text="Đơn giá" prefWidth="120" />
+                    <TableColumn fx:id="colStock" text="Tồn kho" prefWidth="100" />
+                </columns>
+            </TableView>
+
+            <!-- Khu vực nhập thông tin sản phẩm -->
+            <GridPane hgap="10" vgap="10">
+                <padding>
+                    <Insets top="15" right="15" bottom="15" left="15"/>
+                </padding>
+
+                <Label text="Mã SP:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Loại:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtCategoryId" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Tên SP:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtName" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Đơn giá:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPrice" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="Tồn kho:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtStock" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </GridPane>
+
+        </VBox>
+    </center>
+
+    <!-- Thanh dưới cùng -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Label text="Tổng số sản phẩm:" />
+            <Label fx:id="lblTongSP" text="0" style="-fx-font-weight: bold;" />
+
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Thêm" onAction="#themSanPham"/>
+            <Button text="Sửa" onAction="#suaSanPham"/>
+            <Button text="Xóa" onAction="#xoaSanPham"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

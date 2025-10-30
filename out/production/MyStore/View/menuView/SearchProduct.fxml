@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.collections.FXCollections?>
+
+<?import java.lang.String?>
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Controller.menuController.SearchProductController"
+      spacing="20"
+      alignment="TOP_CENTER"
+      style="-fx-background-color: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);">
+
+    <!-- Tiêu đề có shape trang trí -->
+    <StackPane alignment="CENTER">
+        <Rectangle width="320" height="50" arcWidth="15" arcHeight="15"
+                   fill="#4CAF50" opacity="0.2"/>
+        <Label text="🔍 Tìm kiếm sản phẩm nâng cao"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;"/>
+    </StackPane>
+
+    <!-- Khối chứa form -->
+    <VBox spacing="15" alignment="CENTER" maxWidth="400"
+          style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);">
+
+        <!-- ComboBox loại sản phẩm -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Loại sản phẩm:" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="cbCategory" promptText="Chọn loại sản phẩm" prefWidth="220"/>
+        </HBox>
+
+        <!-- Slider chọn giá -->
+        <VBox spacing="5" alignment="CENTER_LEFT">
+            <Label text="Khoảng giá:" style="-fx-font-weight: bold;"/>
+            <HBox spacing="5" alignment="CENTER">
+                <Label fx:id="lblMinPrice" text="0₫"/>
+                <Slider fx:id="priceSlider" min="0" max="10000000" value="5000000" showTickMarks="true"
+                        showTickLabels="true" majorTickUnit="2500000" minorTickCount="4" blockIncrement="500000"
+                        style="-fx-control-inner-background: #81c784;"/>
+                <Label fx:id="lblMaxPrice" text="10.000.000₫"/>
+            </HBox>
+        </VBox>
+
+        <!-- ComboBox tình trạng tồn kho -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Tình trạng:" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="cbStock" promptText="Chọn tình trạng" prefWidth="220">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Tất cả"/>
+                        <String fx:value="Còn hàng"/>
+                        <String fx:value="Hết hàng"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+
+        <!-- Nút tìm kiếm -->
+        <Button text="🔎 Tìm kiếm"
+                onAction="#search"
+                prefWidth="200"
+                style="-fx-background-color: #4CAF50;
+                       -fx-text-fill: white;
+                       -fx-font-size: 14px;
+                       -fx-font-weight: bold;
+                       -fx-background-radius: 10;
+                       -fx-padding: 8 0 8 0;
+                       -fx-cursor: hand;"/>
+    </VBox>
+
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+</VBox>

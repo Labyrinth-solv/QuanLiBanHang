@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.menuController.ChiTietHoaDonController">
+
+    <!-- TOP: Tiêu đề -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #f0f0f0;">
+            <padding>
+                <Insets top="12" right="12" bottom="12" left="12"/>
+            </padding>
+            <Label text="🧾 CHI TIẾT HÓA ĐƠN" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <!-- CENTER: Thông tin hóa đơn + danh sách sản phẩm -->
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="15" bottom="10" left="15"/>
+            </padding>
+
+            <!-- Thông tin hóa đơn -->
+            <GridPane hgap="15" vgap="8">
+                <Label text="Mã hóa đơn:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtMaHD" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="Ngày lập:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNgayLap" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Tổng tiền:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTongTien" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <!-- Danh sách chi tiết sản phẩm -->
+            <Label text="Chi tiết hóa đơn:" style="-fx-font-weight: bold; -fx-padding: 10 0 0 0;"/>
+            <TableView fx:id="tableChiTiet" prefHeight="250">
+                <columns>
+                    <TableColumn fx:id="colTenSP" text="Tên sản phẩm" prefWidth="200"/>
+                    <TableColumn fx:id="colSoLuong" text="Số lượng" prefWidth="100"/>
+                    <TableColumn fx:id="colDonGia" text="Đơn giá" prefWidth="100"/>
+                    <TableColumn fx:id="colThanhTien" text="Thành tiền" prefWidth="120"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <!-- BOTTOM: Nút điều khiển -->
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="12" style="-fx-background-color: #f0f0f0;">
+            <padding>
+                <Insets top="12" right="20" bottom="12" left="20"/>
+            </padding>
+
+            <Button text="In hóa đơn" onAction="#inHoaDon"/>
+            <Button text="Đóng" onAction="#dongCuaSo"/>
+        </HBox>
+    </bottom>
+</BorderPane>

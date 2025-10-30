@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.menuController.ThanhToanController"
+            style="-fx-background-color: #f9f9f9;">
+
+    <!-- 🔹 PHẦN TRÊN: TÌM KIẾM NÂNG CAO -->
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT"
+              style="-fx-background-color: #ffffff;
+                     -fx-padding: 8 15;
+                     -fx-border-color: #ddd;
+                     -fx-border-width: 0 0 1 0;">
+            <Label text="🔍 Tìm kiếm nâng cao:"
+                   style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+            <Button text="Mở cửa sổ tìm kiếm"
+                    onAction="#moTimKiemNangCao"
+                    style="-fx-background-color: #4CAF50;
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;
+                           -fx-background-radius: 6;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="🛒 Giỏ hàng"
+                   style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #333;"/>
+        </HBox>
+    </top>
+
+    <!-- 🔹 GIỮA: CHIA 2 CỘT (SẢN PHẨM & GIỎ HÀNG) -->
+    <center>
+        <HBox spacing="15">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <!-- 🧾 DANH SÁCH SẢN PHẨM -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+                <Label text="📦 DANH SÁCH SẢN PHẨM"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                <TableView fx:id="tableSanPham" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" text="Mã SP" prefWidth="80"/>
+                        <TableColumn fx:id="colName" text="Tên sản phẩm" prefWidth="200"/>
+                        <TableColumn fx:id="colPrice" text="Đơn giá" prefWidth="100"/>
+                        <TableColumn fx:id="colStock" text="Tồn kho" prefWidth="80"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Số lượng:"/>
+                    <Spinner fx:id="spSoLuong" prefWidth="80"/>
+                    <Button text="Thêm vào giỏ"
+                            onAction="#themVaoGio"
+                            style="-fx-background-color: #2196F3;
+                                   -fx-text-fill: white;
+                                   -fx-background-radius: 6;"/>
+                </HBox>
+            </VBox>
+
+            <!-- 💰 GIỎ HÀNG -->
+            <VBox spacing="10" prefWidth="350"
+                  style="-fx-background-color: #fff;
+                         -fx-background-radius: 8;
+                         -fx-padding: 10;
+                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10,0,0,0);">
+                <Label text="GIỎ HÀNG"
+                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+
+                <TableView fx:id="tableGioHang" VBox.vgrow="ALWAYS"
+                           style="-fx-background-color: transparent;">
+                    <columns>
+                        <TableColumn fx:id="colGHName" text="Sản phẩm" prefWidth="140"/>
+                        <TableColumn fx:id="colGHSoLuong" text="SL" prefWidth="50"/>
+                        <TableColumn fx:id="colGHDGia" text="Giá" prefWidth="80"/>
+                        <TableColumn fx:id="colGHThanhTien" text="Thành tiền" prefWidth="100"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </HBox>
+    </center>
+
+    <!-- 🔹 DƯỚI: TỔNG TIỀN + NÚT THANH TOÁN -->
+    <bottom>
+        <HBox spacing="15" alignment="CENTER_RIGHT"
+              style="-fx-background-color: #ffffff;
+                     -fx-padding: 10 15;
+                     -fx-border-color: #ddd;
+                     -fx-border-width: 1 0 0 0;">
+            <Label text="Tổng tiền:"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TextField fx:id="txtTongTien" editable="false" prefWidth="160"
+                       style="-fx-font-weight: bold; -fx-text-fill: #e91e63;"/>
+            <Button text="🗑 Xóa giỏ" onAction="#xoaGioHang"
+                    style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-background-radius: 6;"/>
+            <Button text="💳 Thanh toán" onAction="#thanhToan"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 6;"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
