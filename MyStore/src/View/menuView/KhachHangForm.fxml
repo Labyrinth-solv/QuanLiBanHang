@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.menuController.KhachHangFormController"
+            style="-fx-background-color: #ffffff;">
+
+    <!-- 🔹 PHẦN TÌM KIẾM -->
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
+            <Label text="🔍 Tìm kiếm:"/>
+            <TextField fx:id="txtTimKiem" promptText="Nhập tên hoặc SĐT..." prefWidth="250"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnThemKhach" text="+ Thêm khách hàng" onAction="#toggleThemKhach" />
+        </HBox>
+    </top>
+
+    <!-- 🔹 BẢNG DANH SÁCH KHÁCH HÀNG -->
+    <center>
+        <TableView fx:id="tableKhachHang" prefHeight="300">
+            <columns>
+                <TableColumn fx:id="colTen" text="Tên khách" prefWidth="180"/>
+                <TableColumn fx:id="colSdt" text="SĐT" prefWidth="140"/>
+                <TableColumn fx:id="colDiem" text="Điểm" prefWidth="80"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <!-- 🔹 FORM THÊM KHÁCH HÀNG (ẩn mặc định) -->
+    <bottom>
+        <VBox fx:id="formThem" spacing="8" style="-fx-padding: 10; -fx-background-color: #f5f5f5;" visible="false">
+            <Label text="Thêm khách hàng mới" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+            <GridPane hgap="10" vgap="8">
+                <Label text="Tên:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTenMoi" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="SĐT:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtSdtMoi" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="Điểm:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtDiemMoi" text="0" GridPane.rowIndex="2" GridPane.columnIndex="1" editable="false"/>
+            </GridPane>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Lưu" onAction="#luuKhachHang" style="-fx-background-color:#4CAF50; -fx-text-fill:white;"/>
+                <Button text="Hủy" onAction="#toggleThemKhach"/>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

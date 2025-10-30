@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class ChiTietHoaDonController {
 
     @FXML
-    private TextField txtMaHD, txtNgayLap, txtTongTien;
+    private TextField txtMaHD, txtNgayLap, txtTongTien, txtGiamGia;
 
     @FXML
     private TableView<ChiTietHoaDon> tableChiTiet;
@@ -48,20 +48,23 @@ public class ChiTietHoaDonController {
 
         try (Connection conn = Database.getConnection()) {
             // Lấy thông tin hóa đơn
-            String sqlHD = "SELECT mahd, ngaylap, tongtien FROM hoadon WHERE mahd = ?";
+            String sqlHD = "SELECT mahd, ngaylap, tongtien, giamgia FROM hoadon WHERE mahd = ?";
             PreparedStatement psHD = conn.prepareStatement(sqlHD);
             psHD.setInt(1, maHD);
             ResultSet rsHD = psHD.executeQuery();
 
             LocalDateTime ngayLap = null;
             double tongTien = 0;
+            double giamGia =0;
 
             if (rsHD.next()) {
                 txtMaHD.setText(String.valueOf(maHD));
                 ngayLap = rsHD.getTimestamp("ngaylap").toLocalDateTime();
                 tongTien = rsHD.getDouble("tongtien");
+                giamGia=rsHD.getDouble("giamgia");
                 txtNgayLap.setText(ngayLap.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
                 txtTongTien.setText(String.format("%.0f", tongTien));
+                txtGiamGia.setText(String.format("%.1f", giamGia));
             }
 
             // Lấy chi tiết sản phẩm

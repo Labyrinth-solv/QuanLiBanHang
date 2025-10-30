@@ -2,6 +2,7 @@ package Controller.menuController;
 
 import Database.Database;
 import Model.CartItem;
+import Model.KhachHang;
 import Model.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,6 +35,9 @@ public class ThanhToanController {
     // 🔹 Thành phần khác
     @FXML private Spinner<Integer> spSoLuong;
     @FXML private TextField txtTongTien;
+    @FXML private TextField txtKhachHang;
+    // 🔹 Thêm biến FXML cho giảm giá
+    @FXML private TextField txtGiamGia;
 
     // 🔹 Dữ liệu chính
     private final ObservableList<Product> dsSanPham = FXCollections.observableArrayList();
@@ -60,9 +64,10 @@ public class ThanhToanController {
 
         // Load danh sách sản phẩm mặc định
         loadTatCaSanPham();
+
     }
 
-    /** 📦 Load tất cả sản phẩm ban đầu */
+    /**  Load tất cả sản phẩm ban đầu */
     private void loadTatCaSanPham() {
         dsSanPham.clear();
         try (Connection conn = Database.getConnection();
@@ -82,7 +87,7 @@ public class ThanhToanController {
         }
     }
 
-    /** 🔍 Mở cửa sổ tìm kiếm nâng cao (tái sử dụng SearchProduct.fxml) */
+    /**  Mở cửa sổ tìm kiếm nâng cao (tái sử dụng SearchProduct.fxml) */
     @FXML
     private void moTimKiemNangCao() {
         try {
@@ -91,7 +96,7 @@ public class ThanhToanController {
 
             SearchProductController controller = loader.getController();
 
-            // ✅ callback: khi tìm kiếm xong, nhận dữ liệu và gán vào bảng sản phẩm
+            // callback: khi tìm kiếm xong, nhận dữ liệu và gán vào bảng sản phẩm
             controller.setOnSearchComplete(result -> {
                 dsSanPham.setAll(result);
                 tableSanPham.refresh();
@@ -107,7 +112,7 @@ public class ThanhToanController {
         }
     }
 
-    /** 📋 Cập nhật danh sách sản phẩm sau khi tìm kiếm */
+    /**  Cập nhật danh sách sản phẩm sau khi tìm kiếm */
     public void updateProductTable(ObservableList<Product> newList) {
         dsSanPham.setAll(newList);
     }
@@ -164,7 +169,11 @@ public class ThanhToanController {
         loadTatCaSanPham();
     }
 
-    /** 💳 Thanh toán */
+    private KhachHang khachHangDangChon;
+
+
+
+    /**  Thanh toán (có tính điểm khách hàng) */
     @FXML
     private void thanhToan() {
         if (dsGioHang.isEmpty()) {
@@ -172,46 +181,137 @@ public class ThanhToanController {
             return;
         }
 
+        double tongTien = dsGioHang.stream().mapToDouble(CartItem::getThanhTien).sum();
+        capNhatTongTien();
+
+        // Lấy khách hàng nếu có
+        KhachHang khachHang = khachHangDangChon;
+        double giamGia = tinhGiamGiaTheoDiem(khachHangDangChon, tongTien);
+
+        // Cập nhật điểm khách hàng thực tế
+        if (khachHangDangChon != null) {
+            int diemMoi = khachHangDangChon.getDiem() + ((tongTien >= 50_000) ? 20 : 10);
+            if (diemMoi >= 50) {
+                diemMoi -= 50; // trừ điểm để áp giảm giá
+            }
+            khachHangDangChon.setDiem(diemMoi);
+
+            // Lưu điểm mới vào DB
+            try (Connection conn = Database.getConnection();
+                 PreparedStatement ps = conn.prepareStatement("UPDATE khachhang SET diem=? WHERE id=?")) {
+                ps.setInt(1, diemMoi);
+                ps.setInt(2, khachHangDangChon.getId());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Lưu hóa đơn và chi tiết vào DB
         try (Connection conn = Database.getConnection()) {
             conn.setAutoCommit(false);
 
+            // Thêm hóa đơn
             PreparedStatement insertHD = conn.prepareStatement(
-                    "INSERT INTO hoadon (ngaylap, tongtien) VALUES (?, ?)",
+                    "INSERT INTO hoadon (ngaylap, tongtien, sdt, giamgia) VALUES (?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             insertHD.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
-            insertHD.setDouble(2, tinhTongTien());
+            insertHD.setDouble(2, tongTien - giamGia);
+            insertHD.setString(3, khachHang != null ? khachHang.getSdt() : null);
+            insertHD.setDouble(4, giamGia);
             insertHD.executeUpdate();
 
             ResultSet rs = insertHD.getGeneratedKeys();
             rs.next();
             int maHD = rs.getInt(1);
 
+            // Thêm chi tiết hóa đơn
             PreparedStatement insertCT = conn.prepareStatement(
                     "INSERT INTO chitiethoadon (mahd, tensp, soluong, dongia, thanhtien) VALUES (?, ?, ?, ?, ?)");
             for (CartItem item : dsGioHang) {
+                double itemGiamGia = (giamGia > 0) ? giamGia / dsGioHang.size() : 0; // chỉ để hiển thị
                 insertCT.setInt(1, maHD);
                 insertCT.setString(2, item.getName());
                 insertCT.setInt(3, item.getSoLuong());
                 insertCT.setDouble(4, item.getDonGia());
-                insertCT.setDouble(5, item.getThanhTien());
+                insertCT.setDouble(5, item.getThanhTien() - itemGiamGia);
                 insertCT.addBatch();
+
+                // Cập nhật tạm giảm giá trong TableView
+                item.setGiamGia(itemGiamGia);
             }
             insertCT.executeBatch();
 
             conn.commit();
-            showAlert("Thanh toán thành công!");
+
+            // Hiển thị alert
+            StringBuilder msg = new StringBuilder("Thanh toán thành công!\n");
+            msg.append("Tổng tiền: ").append(String.format("%,.0f₫", tongTien ));
+            if (giamGia > 0) msg.append("\nGiảm giá: -").append(String.format("%,.0f₫", giamGia));
+            msg.append("\nThành tiền: ").append(String.format("%,.0f₫", tongTien-giamGia));
+            if (khachHang != null) {
+                msg.append("\nKhách hàng: ").append(khachHang.getTen())
+                        .append("\nĐiểm hiện tại: ").append(khachHang.getDiem());
+            }
+            showAlert(msg.toString());
+
+            // Xóa giỏ hàng và cập nhật view
             dsGioHang.clear();
-            capNhatTongTien();
             loadTatCaSanPham();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    /** 🧮 Cập nhật tổng tiền */
-    private void capNhatTongTien() {
-        txtTongTien.setText(String.format("%,.0f₫", tinhTongTien()));
+    @FXML
+    private void chonKhachHang() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/menuView/KhachHangForm.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Chọn khách hàng");
+            stage.setScene(new Scene(loader.load()));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            KhachHangFormController controller = loader.getController();
+            KhachHang kh = controller.getKhachHangDaChon();
+
+            if (kh != null) {
+                khachHangDangChon = kh; // Lưu lại khách hàng đã chọn
+                //HIEN THI TEN KH LEN MAN HINH
+                txtKhachHang.setText(kh.getTen() + " - " + kh.getSdt() + " (điểm: " + kh.getDiem() + ")");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
+    /**  Cập nhật tổng tiền */
+    private void capNhatTongTien() {
+        double tongTien = tinhTongTien();
+        double giamGia = tinhGiamGiaTheoDiem(khachHangDangChon, tongTien);
+
+        // Trừ giảm giá
+        tongTien -= giamGia;
+
+        txtTongTien.setText(String.format("%,.0f₫", tongTien));
+        txtGiamGia.setText(String.format("%,.0f₫", giamGia));
+    }
+
+
+
+    private double tinhGiamGiaTheoDiem(KhachHang kh, double tongTien) {
+        if (kh == null) return 0;
+
+        int diemMoi = kh.getDiem() + ((tongTien >= 50_000) ? 20 : 10);
+        if (diemMoi >= 50) {
+            return 10_000;
+        }
+        return 0;
+    }
+
 
     private double tinhTongTien() {
         return dsGioHang.stream().mapToDouble(CartItem::getThanhTien).sum();

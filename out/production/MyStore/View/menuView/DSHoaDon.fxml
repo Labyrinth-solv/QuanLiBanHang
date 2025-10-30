@@ -24,6 +24,7 @@
                 <TableColumn fx:id="colMaHD" text="Mã hóa đơn" prefWidth="100"/>
                 <TableColumn fx:id="colNgayLap" text="Ngày lập" prefWidth="150"/>
                 <TableColumn fx:id="colTongTien" text="Tổng tiền" prefWidth="120"/>
+                <TableColumn fx:id="colSDT" text="SĐT KH" prefWidth="120"/>
             </columns>
         </TableView>
     </center>

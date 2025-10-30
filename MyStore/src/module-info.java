@@ -12,10 +12,12 @@ module MyStore {
     opens View to javafx.fxml;
     opens Controller.menuController to javafx.fxml;
     opens View.menuView to javafx.fxml;
+    opens Model to javafx.base;
 
     exports Controller;
     exports Start;
     exports Controller.menuController;
+    exports Model;
 
 
 }

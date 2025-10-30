@@ -20,23 +20,18 @@ import java.time.format.DateTimeFormatter;
 
 public class DSHoaDonController {
 
-    @FXML
-    private TableView<HoaDon> tableHoaDon;
-
-    @FXML
-    private TableColumn<HoaDon, Integer> colMaHD;
-
-    @FXML
-    private TableColumn<HoaDon, String> colNgayLap;
-
-    @FXML
-    private TableColumn<HoaDon, Double> colTongTien;
+    @FXML private TableView<HoaDon> tableHoaDon;
+    @FXML private TableColumn<HoaDon, Integer> colMaHD;
+    @FXML private TableColumn<HoaDon, String> colNgayLap;
+    @FXML private TableColumn<HoaDon, Double> colTongTien;
+    @FXML private TableColumn<HoaDon, String> colSDT;
 
     private ObservableList<HoaDon> danhSachHoaDon = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
         colMaHD.setCellValueFactory(data -> data.getValue().maHDProperty().asObject());
+        colSDT.setCellValueFactory(data -> data.getValue().SDTProperty());
 
         // Hiển thị LocalDateTime dưới dạng String
         colNgayLap.setCellValueFactory(data -> {
@@ -64,7 +59,7 @@ public class DSHoaDonController {
     private void loadDanhSachHoaDon() {
         danhSachHoaDon.clear();
         try (Connection conn = Database.getConnection()) {
-            String sql = "SELECT mahd, ngaylap, tongtien FROM hoadon ORDER BY mahd DESC";
+            String sql = "SELECT mahd, ngaylap, tongtien, sdt FROM hoadon ORDER BY mahd DESC";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -73,8 +68,9 @@ public class DSHoaDonController {
                 Timestamp ts = rs.getTimestamp("ngaylap");
                 LocalDateTime ngayLap = ts.toLocalDateTime();
                 double tongTien = rs.getDouble("tongtien");
+                String sdt=rs.getString("sdt");
 
-                danhSachHoaDon.add(new HoaDon(mahd, ngayLap, tongTien));
+                danhSachHoaDon.add(new HoaDon(mahd, ngayLap, tongTien, sdt));
             }
         } catch (SQLException e) {
             e.printStackTrace();

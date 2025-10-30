@@ -32,8 +32,11 @@
                 <Label text="Ngày lập:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                 <TextField fx:id="txtNgayLap" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                <Label text="Tổng tiền:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtTongTien" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Giảm giá:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtGiamGia" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="Tổng tiền:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtTongTien" editable="false" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
             </GridPane>
 
             <!-- Danh sách chi tiết sản phẩm -->

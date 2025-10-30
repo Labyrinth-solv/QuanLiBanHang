@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import Controller.menuController.KhachHangFormController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,14 +29,12 @@ public class MainScreenController implements Initializable {
     private TabPane tab;
     private SingleSelectionModel<Tab> selectionModel;
     private static int flagForTab = -1;
-    private static int flagForDSSP_DichVu, flagForHoaDon, flagForDSSP_Kho, flagForDatHang, flagForNhapHang,
-            flagForDSNhanVien, flagForThemNhanVien, flagForDoanhThu, flagForNhapXuatHang, flagForDSHoaDon,
-            flagForDSNhaCungCap;
+    private static int flagForDSSP_DichVu, flagForHoaDon,
+            flagForDSNhanVien, flagForThemNhanVien, flagForDoanhThu, flagForDSHoaDon, flagForDSKhachHang;
 
     @FXML
-    private Button btnDanhSachSanPham_DichVu, btnHoaDon_DichVu, btnDanhSachSanPham_QuanLyKho, btnDatHang_QuanLyKho,
-            btnNhapHang_QuanLyKho, btnDanhSach_NhanVien, btnThemNhanVien, btnBaoCaoDoanhThu, btnBaoCaoNhapXuatHang,
-            btnDanhSachHoaDon, btnDSNhaCungCap;
+    private Button btnDanhSachSanPham_DichVu, btnHoaDon_DichVu, btnDanhSach_NhanVien, btnThemNhanVien, btnBaoCaoDoanhThu,
+            btnDanhSachHoaDon, btnDanhSachKhachHang;
 
     @FXML
     private Text txtNgay, txtTenNhanVien;
@@ -55,6 +54,7 @@ public class MainScreenController implements Initializable {
         flagForThemNhanVien = -1;
         flagForDoanhThu = -1;
         flagForDSHoaDon = -1;
+        flagForDSKhachHang=-1;
 
         // Tien hanh cap nhat ngay thang va ho ten nhan vien
         LocalDate localDate = LocalDate.now();
@@ -131,6 +131,19 @@ public class MainScreenController implements Initializable {
         btnThemNhanVien.setOnMouseEntered(this::mouseEnter);
 
         btnThemNhanVien.setOnMouseExited(this::mouseExit);
+
+        btnDanhSachKhachHang.setOnMouseClicked(e -> {
+            try {
+                hienThiDSKhachHang();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        btnDanhSachKhachHang.setOnMouseEntered(this::mouseEnter);
+
+        btnDanhSachKhachHang.setOnMouseExited(this::mouseExit);
+
 
         btnBaoCaoDoanhThu.setOnMouseClicked(e -> {
             try {
@@ -248,6 +261,37 @@ public class MainScreenController implements Initializable {
         selectionModel.select(flagForDSNhanVien);
 
     }
+    private void hienThiDSKhachHang() throws IOException {
+        if(flagForDSKhachHang == -1) {
+            Tab tab1 = new Tab();
+            tab1.setText("Danh sách khách hàng");
+
+            // Tạo FXMLLoader riêng
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/menuView/KhachHangForm.fxml"));
+            Parent root = loader.load();
+
+            // Lấy controller
+            KhachHangFormController controller = loader.getController();
+
+            // Gọi method để ẩn nút thêm khách hàng và hủy double click
+            controller.disableAddButton();
+            controller.disableDoubleClickSelect();
+
+            tab1.setContent(root);
+            tab.getTabs().add(tab1);
+
+            flagForTab++;
+            flagForDSKhachHang = flagForTab;
+
+            tab1.setOnCloseRequest(e -> {
+                flagForTab--;
+                flagForDSKhachHang = -1;
+            });
+        }
+
+        selectionModel.select(flagForDSKhachHang);
+    }
+
 
         // TƯƠNG ỨNG VỚI ThanhToan.fxml
     private void hienThiHoaDon() throws IOException {
