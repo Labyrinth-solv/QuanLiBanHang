@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controller.menuController.EmployeeListController"
+            prefWidth="800" prefHeight="500"
+            style="-fx-background-color:linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+                   -fx-padding:20; -fx-background-radius:10;">
+
+    <!-- Tiêu đề -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="📋 Danh Sách Nhân Viên"
+                   style="-fx-font-size:20; -fx-font-weight:bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="🔄 Làm mới" onAction="#onRefresh"
+                    style="-fx-background-color:#4CAF50; -fx-text-fill:white;
+                           -fx-background-radius:6; -fx-padding:6 16;"/>
+            <Button text="➕ Sửa" onAction="#onEditEmployee"
+                    style="-fx-background-color:#2196F3; -fx-text-fill:white;
+                           -fx-background-radius:6; -fx-padding:6 16;"/>
+        </HBox>
+    </top>
+
+    <!-- Bảng dữ liệu -->
+    <center>
+        <TableView fx:id="tableEmployees"
+                   style="-fx-background-radius:6; -fx-border-radius:6;
+                          -fx-padding:10; -fx-table-cell-border-color:transparent;">
+            <columns>
+                <TableColumn fx:id="colId" text="Mã NV" prefWidth="80"/>
+                <TableColumn fx:id="colName" text="Họ và tên" prefWidth="160"/>
+                <TableColumn fx:id="colGender" text="Giới tính" prefWidth="100"/>
+                <TableColumn fx:id="colBirth" text="Ngày sinh" prefWidth="120"/>
+                <TableColumn fx:id="colShift" text="Ca làm việc" prefWidth="140"/>
+                <TableColumn fx:id="colSalary" text="Lương" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

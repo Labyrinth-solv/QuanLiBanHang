@@ -64,7 +64,7 @@ public class MainScreenController implements Initializable {
         txtTenNhanVien.setText(Constants.staffName);
 
 //        btnDanhSachSanPham_DichVu.setDisable(true);
-        btnThemNhanVien.setDisable(true);
+//        btnThemNhanVien.setDisable(true);
 
         if (5== Constants.accountID) {
             btnThemNhanVien.setDisable(true);
@@ -107,6 +107,14 @@ public class MainScreenController implements Initializable {
 
         btnHoaDon_DichVu.setOnMouseExited(this::mouseExit);
 
+
+        btnDanhSach_NhanVien.setOnMouseClicked(e -> {
+            try {
+                hienThiDSNhanVien();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
 
         btnDanhSach_NhanVien.setOnMouseEntered(this::mouseEnter);
 
@@ -202,7 +210,7 @@ public class MainScreenController implements Initializable {
             Tab tab1 = new Tab();
             tab1.setText("Thêm nhân viên");
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/ThemNhanVien.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/menuView/AddEmployee.fxml")));
             tab1.setContent(root);
             tab.getTabs().add(tab1);
 
@@ -224,7 +232,7 @@ public class MainScreenController implements Initializable {
             Tab tab1 = new Tab();
             tab1.setText("Danh sách nhân viên");
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/DSNhanVien.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/menuView/EmployeeList.fxml")));
             tab1.setContent(root);
             tab.getTabs().add(tab1);
 
