@@ -26,6 +26,10 @@ public class AddEmployeeController {
     public void initialize() {
         cbGender.getItems().addAll("Nam", "Nữ", "Khác");
         cbShift.getItems().addAll("Ca sáng", "Ca chiều", "Ca tối");
+
+        if (employee == null) {   // nếu chưa có nhân viên (thêm mới)
+            employee = new Employee();
+        }
     }
 
     /** Thiết lập callback sau khi lưu */
@@ -66,24 +70,43 @@ public class AddEmployeeController {
     @FXML
     public void onSave() {
         try (Connection conn = Database.getConnection()) {
-            if (employee.getName() == null || employee.getName().isBlank()) {
+            String name = tfName.getText().trim();
+            LocalDate birth = dpBirth.getValue();
+            String gender = cbGender.getValue();
+            String shift = cbShift.getValue();
+            String salaryText = tfSalary.getText().trim();
+
+            if (name.isEmpty()) {
                 new Alert(Alert.AlertType.WARNING, "Vui lòng nhập tên nhân viên!").showAndWait();
                 return;
             }
-            if (employee.getBirth() == null) {
+            if (birth == null) {
                 new Alert(Alert.AlertType.WARNING, "Vui lòng chọn ngày sinh!").showAndWait();
                 return;
             }
+            if (salaryText.isEmpty()) {
+                new Alert(Alert.AlertType.WARNING, "Vui lòng nhập lương!").showAndWait();
+                return;
+            }
+
+            double salary = Double.parseDouble(salaryText);
+
+            // Gán ngược lại vào object employee
+            employee.setName(name);
+            employee.setBirth(birth);
+            employee.setGender(gender);
+            employee.setShift(shift);
+            employee.setSalary(salary);
 
             if (employee.getId() > 0) {
                 // --- UPDATE ---
                 String sql = "UPDATE employee SET name=?, birth=?, gender=?, shift=?, salary=? WHERE id=?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, employee.getName());
-                    ps.setDate(2, Date.valueOf(employee.getBirth()));
-                    ps.setString(3, employee.getGender());
-                    ps.setString(4, employee.getShift());
-                    ps.setDouble(5, employee.getSalary());
+                    ps.setString(1, name);
+                    ps.setDate(2, Date.valueOf(birth));
+                    ps.setString(3, gender);
+                    ps.setString(4, shift);
+                    ps.setDouble(5, salary);
                     ps.setInt(6, employee.getId());
                     ps.executeUpdate();
                 }
@@ -91,22 +114,31 @@ public class AddEmployeeController {
             } else {
                 // --- INSERT ---
                 String sql = "INSERT INTO employee (name, birth, gender, shift, salary) VALUES (?, ?, ?, ?, ?)";
-                try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, employee.getName());
-                    ps.setDate(2, Date.valueOf(employee.getBirth()));
-                    ps.setString(3, employee.getGender());
-                    ps.setString(4, employee.getShift());
-                    ps.setDouble(5, employee.getSalary());
+                try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                    ps.setString(1, name);
+                    ps.setDate(2, Date.valueOf(birth));
+                    ps.setString(3, gender);
+                    ps.setString(4, shift);
+                    ps.setDouble(5, salary);
                     ps.executeUpdate();
+
+                    try (ResultSet rs = ps.getGeneratedKeys()) {
+                        if (rs.next()) employee.setId(rs.getInt(1));
+                    }
                 }
                 new Alert(Alert.AlertType.INFORMATION, "Thêm nhân viên mới thành công!").showAndWait();
             }
 
             if (onSaveCallback != null) onSaveCallback.run();
 
+            // Đóng cửa sổ sau khi lưu
+//            tfName.getScene().getWindow().hide();
+
         } catch (SQLException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Lỗi khi lưu vào database:\n" + e.getMessage()).showAndWait();
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Lương phải là số hợp lệ!").showAndWait();
         }
     }
 
