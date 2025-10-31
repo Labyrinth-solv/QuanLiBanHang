@@ -127,6 +127,7 @@ public class MainController implements Initializable {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/MainScreen.fxml")));
             Scene scene = new Scene(root, 1300, 690);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/View/css/Application.css")).toExternalForm());
             manHinhChinh.setScene(scene);
             manHinhChinh.initModality(Modality.APPLICATION_MODAL);
             manHinhChinh.show();

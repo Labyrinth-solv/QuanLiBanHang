@@ -30,14 +30,15 @@ public class MainScreenController implements Initializable {
     private SingleSelectionModel<Tab> selectionModel;
     private static int flagForTab = -1;
     private static int flagForDSSP_DichVu, flagForHoaDon,
-            flagForDSNhanVien, flagForThemNhanVien, flagForDoanhThu, flagForDSHoaDon, flagForDSKhachHang;
+            flagForDSNhanVien, flagForThemNhanVien, flagForDoanhThu, flagForDSHoaDon, flagForDSKhachHang,
+            flagForHome;
 
     @FXML
     private Button btnDanhSachSanPham_DichVu, btnHoaDon_DichVu, btnDanhSach_NhanVien, btnThemNhanVien, btnBaoCaoDoanhThu,
-            btnDanhSachHoaDon, btnDanhSachKhachHang;
+            btnDanhSachHoaDon, btnDanhSachKhachHang, btnTrangChu;
 
     @FXML
-    private Text txtNgay, txtTenNhanVien;
+    private javafx.scene.control.Label txtNgay, txtTenNhanVien;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,6 +56,7 @@ public class MainScreenController implements Initializable {
         flagForDoanhThu = -1;
         flagForDSHoaDon = -1;
         flagForDSKhachHang=-1;
+        flagForHome = -1;
 
         // Tien hanh cap nhat ngay thang va ho ten nhan vien
         LocalDate localDate = LocalDate.now();
@@ -80,9 +82,27 @@ public class MainScreenController implements Initializable {
             btnDanhSachHoaDon.setDisable(true);
         }
 
+        // Mở mặc định trang chủ sau khi vào màn hình chính
+        try {
+            hienThiTrangChu();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addEvents() {
+        btnTrangChu.setOnMouseClicked(e -> {
+            try {
+                hienThiTrangChu();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        btnTrangChu.setOnMouseEntered(this::mouseEnter);
+
+        btnTrangChu.setOnMouseExited(this::mouseExit);
+
         btnDanhSachSanPham_DichVu.setOnMouseClicked(e -> {
             try {
                 hienThiDSSP_DichVu();
@@ -341,6 +361,27 @@ public class MainScreenController implements Initializable {
         selectionModel.select(flagForDSSP_DichVu);
     }
 
+    private void hienThiTrangChu() throws IOException {
+        if (flagForHome == -1) {
+            Tab tab1 = new Tab();
+            tab1.setText("Trang chủ");
+
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/menuView/Home.fxml")));
+            tab1.setContent(root);
+            tab.getTabs().add(tab1);
+
+            flagForTab++;
+            flagForHome = flagForTab;
+
+            tab1.setOnCloseRequest(e -> {
+                flagForTab--;
+                flagForHome = -1;
+            });
+        }
+
+        selectionModel.select(flagForHome);
+    }
+
     /**
      * Xu ly mouse hover qua tung button
      *
@@ -349,12 +390,11 @@ public class MainScreenController implements Initializable {
     private void mouseEnter(MouseEvent e) {
         Button btn = (Button) e.getSource();
         btn.setCursor(Cursor.HAND);
-        btn.setStyle("-fx-background-color: #00CCFF");
     }
 
     private void mouseExit(MouseEvent e) {
         Button btn = (Button) e.getSource();
-        btn.setStyle("-fx-background-color: transparent");
+        // styling handled by CSS
     }
 
 }

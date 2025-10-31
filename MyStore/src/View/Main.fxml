@@ -5,68 +5,49 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:controller="Controller.MainController"
-          xmlns="http://javafx.com/javafx/21"
-          xmlns:fx="http://javafx.com/fxml/1"
-          prefWidth="320" prefHeight="200"
-          hgap="10" vgap="10"
-          styleClass="login-pane">
+<BorderPane fx:controller="Controller.MainController"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="520" prefHeight="420"
+            styleClass="login-root">
 
-    <padding>
-        <Insets top="20" left="20" right="20" bottom="20"/>
-    </padding>
+    <top>
+        <VBox alignment="CENTER" spacing="4" BorderPane.alignment="CENTER" styleClass="login-header">
+            <Label text="QUẢN LÝ CỬA HÀNG" styleClass="app-title"/>
+            <Label text="Đăng nhập hệ thống" styleClass="app-subtitle"/>
+        </VBox>
+    </top>
 
-    <columnConstraints>
-        <ColumnConstraints prefWidth="120"/>
-        <ColumnConstraints prefWidth="190"/>
-    </columnConstraints>
+    <center>
+        <GridPane hgap="12" vgap="14" BorderPane.alignment="CENTER" styleClass="login-card">
+            <padding>
+                <Insets top="20" left="24" right="24" bottom="16"/>
+            </padding>
 
-    <!-- USERNAME -->
-    <Label text="Tên đăng nhập:"
-           GridPane.rowIndex="0"
-           styleClass="login-label"/>
+            <columnConstraints>
+                <ColumnConstraints prefWidth="160"/>
+                <ColumnConstraints prefWidth="260"/>
+            </columnConstraints>
 
-    <TextField fx:id="txtUserName"
-               prefHeight="28"
-               GridPane.rowIndex="0"
-               GridPane.columnIndex="1"
-               styleClass="input-field"/>
+            <Label text="Tên đăng nhập:" GridPane.rowIndex="0" styleClass="login-label"/>
+            <TextField fx:id="txtUserName" promptText="Nhập tên đăng nhập" prefHeight="40" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="input-field"/>
 
-    <!-- PASSWORD -->
-    <Label text="Mật khẩu:"
-           GridPane.rowIndex="1"
-           styleClass="login-label"/>
+            <Label text="Mật khẩu:" GridPane.rowIndex="1" styleClass="login-label"/>
+            <PasswordField fx:id="txtPassword" promptText="Nhập mật khẩu" prefHeight="40" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="input-field"/>
 
-    <PasswordField fx:id="txtPassword"
-                   prefHeight="28"
-                   GridPane.rowIndex="1"
-                   GridPane.columnIndex="1"
-                   styleClass="input-field"/>
+            <Label fx:id="txtLoiDangNhap" GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2" styleClass="error-label" />
 
-    <!-- LOGIN ERROR -->
-    <Label fx:id="txtLoiDangNhap"
-           textFill="#ee2222"
-           GridPane.rowIndex="2"
-           GridPane.columnIndex="0"
-           GridPane.columnSpan="2"
-           styleClass="error-label" />
+            <HBox spacing="14" alignment="CENTER" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                <Button fx:id="btnThoat" text="Thoát" onAction="#thoat" prefWidth="120" styleClass="btn-cancel"/>
+                <Button fx:id="btnDangNhap" text="Đăng nhập" onAction="#dangNhap" prefWidth="140" styleClass="btn-login"/>
+            </HBox>
+        </GridPane>
+    </center>
 
-    <!-- BUTTONS -->
-    <HBox spacing="15"
-          alignment="CENTER_RIGHT"
-          GridPane.rowIndex="3"
-          GridPane.columnIndex="1">
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="36" BorderPane.alignment="CENTER" styleClass="login-footer">
+            <Label text="© 2024 Quản lý Cửa hàng - Phiên bản 1.0"/>
+        </HBox>
+    </bottom>
 
-        <Button fx:id="btnDangNhap"
-                text="Đăng nhập"
-                onAction="#dangNhap"
-                prefWidth="90"
-                styleClass="btn-login"/>
-
-        <Button fx:id="btnThoat"
-                text="Thoát"
-                onAction="#thoat"
-                prefWidth="80"
-                styleClass="btn-cancel"/>
-    </HBox>
-</GridPane>
+</BorderPane>

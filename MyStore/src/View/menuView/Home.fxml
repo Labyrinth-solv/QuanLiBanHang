@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <center>
+        <VBox alignment="CENTER" spacing="12" BorderPane.alignment="CENTER">
+            <Label text="Chào mừng đến với hệ thống" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2d3748;"/>
+            <Label text="QUẢN LÝ CỬA HÀNG" style="-fx-font-size: 34px; -fx-font-weight: 900; -fx-text-fill: #2F80ED;"/>
+            <Label text="Công cụ quản lý cửa hàng hiện đại và hiệu quả" style="-fx-text-fill: #6b7280; -fx-font-size: 14px;"/>
+            <HBox spacing="60" alignment="CENTER" style="-fx-padding: 40 0 0 0;">
+                <VBox alignment="CENTER" spacing="6">
+                    <Label text="📦" style="-fx-font-size: 36px;"/>
+                    <Label text="Quản lý sản phẩm" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                    <Label text="Quản lý sản phẩm, tồn kho" style="-fx-text-fill: #9ca3af; -fx-font-size: 12px;"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="6">
+                    <Label text="💲" style="-fx-font-size: 36px;"/>
+                    <Label text="Thanh toán" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                    <Label text="Xử lý hóa đơn, giao dịch" style="-fx-text-fill: #9ca3af; -fx-font-size: 12px;"/>
+                </VBox>
+                <VBox alignment="CENTER" spacing="6">
+                    <Label text="📊" style="-fx-font-size: 36px;"/>
+                    <Label text="Báo cáo" style="-fx-font-weight: bold; -fx-text-fill: #374151;"/>
+                    <Label text="Thống kê doanh thu" style="-fx-text-fill: #9ca3af; -fx-font-size: 12px;"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
+
+

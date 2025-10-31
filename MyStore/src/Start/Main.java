@@ -14,9 +14,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            GridPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/Main.fxml")));
-            Scene scene = new Scene(root,500,200);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/View/css/application.css")).toExternalForm());
+            javafx.scene.Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/Main.fxml")));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/View/css/Application.css")).toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
 
