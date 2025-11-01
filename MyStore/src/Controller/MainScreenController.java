@@ -22,9 +22,8 @@ import javafx.scene.text.Text;
 
 public class MainScreenController implements Initializable {
 
-    /**
-     * Khai bao
-     */
+     //Khai bao
+
     @FXML
     private TabPane tab;
     private SingleSelectionModel<Tab> selectionModel;
@@ -63,7 +62,7 @@ public class MainScreenController implements Initializable {
 
         txtTenNhanVien.setText(Constants.staffName);
 
-//        btnDanhSachSanPham_DichVu.setDisable(true);
+    //        btnDanhSachSanPham_DichVu.setDisable(true);
 
         if (5== Constants.accountID) {
             btnBaoCaoDoanhThu.setDisable(true);
@@ -158,10 +157,8 @@ public class MainScreenController implements Initializable {
         btnDanhSachHoaDon.setOnMouseExited(this::mouseExit);
     }
 
-    /**
-     * Xu ly hien thi cac man hinh rieng biet len cac tab
-     * @throws IOException
-     */
+    // Xu ly hien thi cac man hinh rieng biet len cac tab
+    //@throws IOException
 
     private void hienThiDSHoaDon() throws IOException {
         if(flagForDSHoaDon == -1) {
@@ -244,7 +241,7 @@ public class MainScreenController implements Initializable {
             Tab tab1 = new Tab();
             tab1.setText("Thanh toán"); // Tên tab hiển thị trên giao diện
 
-            // ✅ Đường dẫn đến file FXML của giao diện thanh toán
+            // Đường dẫn đến file FXML của giao diện thanh toán
             Parent root = FXMLLoader.load(Objects.requireNonNull(
                     getClass().getResource("/View/menuView/ThanhToan.fxml")
             ));
@@ -260,7 +257,7 @@ public class MainScreenController implements Initializable {
             });
         }
 
-        // ✅ Chuyển sang tab Thanh toán
+        // Chuyển sang tab Thanh toán
         selectionModel.select(flagForHoaDon);
     }
 

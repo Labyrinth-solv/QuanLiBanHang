@@ -24,7 +24,7 @@ public class SearchProductController {
 
     private ObservableList<Product> searchResult = FXCollections.observableArrayList();
 
-    // ✅ callback để gửi kết quả về ThanhToanController
+    //  callback để gửi kết quả về ThanhToanController
     private Consumer<ObservableList<Product>> onSearchComplete;
 
     public void setOnSearchComplete(Consumer<ObservableList<Product>> callback) {

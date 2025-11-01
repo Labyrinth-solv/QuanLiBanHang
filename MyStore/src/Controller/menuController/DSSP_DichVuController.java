@@ -60,8 +60,8 @@ public class DSSP_DichVuController {
                         rs.getString("id"),
                         rs.getString("categoryId"),
                         rs.getString("name"),
-                        rs.getDouble("price"),  // 🔹 price trước
-                        rs.getInt("stock")      // 🔹 stock sau
+                        rs.getDouble("price"),  // price trước
+                        rs.getInt("stock")      // stock sau
                 ));
             }
 
@@ -73,7 +73,7 @@ public class DSSP_DichVuController {
         }
     }
 
-    // ------------------ Thêm sản phẩm ------------------
+    //  Thêm sản phẩm
     @FXML
     private void themSanPham() {
         try {
@@ -109,7 +109,8 @@ public class DSSP_DichVuController {
         }
     }
 
-    // ------------------ Sửa sản phẩm ------------------
+    // Sửa sản phẩm
+
     @FXML
     private void suaSanPham() {
         Product selected = tableSanPham.getSelectionModel().getSelectedItem();
@@ -166,7 +167,8 @@ public class DSSP_DichVuController {
         }
     }
 
-    // ------------------ Xóa sản phẩm ------------------
+    // Xóa sản phẩm
+
     @FXML
     private void xoaSanPham() {
         Product selected = tableSanPham.getSelectionModel().getSelectedItem();
@@ -191,7 +193,8 @@ public class DSSP_DichVuController {
         }
     }
 
-    // ------------------ Tìm kiếm sản phẩm ------------------
+    //  Tìm kiếm sản phẩm
+
     @FXML
     private void timKiemSanPham() {
         String keyword = txtTimKiem.getText();
@@ -229,7 +232,7 @@ public class DSSP_DichVuController {
 
             SearchProductController controller = loader.getController();
 
-            // ✅ Gán callback để cập nhật TableView khi tìm kiếm xong
+            //  Gán callback để cập nhật TableView khi tìm kiếm xong
             controller.setOnSearchComplete(products -> {
                 tableSanPham.setItems(products);
             });
@@ -246,7 +249,7 @@ public class DSSP_DichVuController {
 
 
 
-    // ------------------ Xóa trắng TextField ------------------
+    // Xóa trắng TextField
     private void clearFields() {
         txtId.clear();
         txtCategoryId.clear();
@@ -257,7 +260,7 @@ public class DSSP_DichVuController {
         isEditing = false;
     }
 
-    // ------------------ Thông báo ------------------
+    //  Thông báo
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);

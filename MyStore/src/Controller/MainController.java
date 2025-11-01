@@ -73,7 +73,7 @@ public class MainController implements Initializable {
     private void login() {
         String loiDangNhap = "";
 
-        // 1️⃣ Kiểm tra trống
+        //  Kiểm tra trống
         String username = txtUserName.getText().trim();
         String password = txtPassword.getText().trim();
 
@@ -84,7 +84,7 @@ public class MainController implements Initializable {
             loiDangNhap += "Mật khẩu không được để trống\n";
         }
 
-        // 2️⃣ Nếu không lỗi nhập liệu, kiểm tra database
+        // Nếu không lỗi nhập liệu, kiểm tra database
         if (loiDangNhap.isEmpty()) {
             String url = "jdbc:mysql://localhost:3306/mydata"; // tên database
             String dbUser = "root"; // user MySQL của bạn
@@ -98,7 +98,7 @@ public class MainController implements Initializable {
 
                     ResultSet rs = stmt.executeQuery();
                     if (rs.next()) {
-                        // ✅ Đăng nhập thành công
+                        // Đăng nhập thành công
                         Constants.staffName = username;
                     } else {
                         loiDangNhap = "Sai tên đăng nhập hoặc mật khẩu!";
@@ -110,7 +110,7 @@ public class MainController implements Initializable {
             }
         }
 
-        // 3️⃣ Nếu có lỗi thì báo ra và reset input
+        // Nếu có lỗi thì báo ra và reset input
         if (!loiDangNhap.isEmpty()) {
             txtLoiDangNhap.setText(loiDangNhap);
             txtUserName.setText("");
@@ -119,7 +119,7 @@ public class MainController implements Initializable {
             return;
         }
 
-        // 4️⃣ Nếu đúng thì chuyển sang màn hình chính
+        // Nếu đúng thì chuyển sang màn hình chính
         Stage stage = (Stage) btnDangNhap.getScene().getWindow();
         stage.close();
 

@@ -20,26 +20,26 @@ import java.time.LocalDateTime;
 
 public class ThanhToanController {
 
-    // 🔹 Bảng sản phẩm
+    //  Bảng sản phẩm
     @FXML private TableView<Product> tableSanPham;
     @FXML private TableColumn<Product, String> colId, colName;
     @FXML private TableColumn<Product, Double> colPrice;
     @FXML private TableColumn<Product, Integer> colStock;
 
-    // 🔹 Bảng giỏ hàng
+    //  Bảng giỏ hàng
     @FXML private TableView<CartItem> tableGioHang;
     @FXML private TableColumn<CartItem, String> colGHName;
     @FXML private TableColumn<CartItem, Integer> colGHSoLuong;
     @FXML private TableColumn<CartItem, Double> colGHDGia, colGHThanhTien;
 
-    // 🔹 Thành phần khác
+    // Thành phần khác
     @FXML private TextField txtSoLuong;
     @FXML private TextField txtTongTien;
     @FXML private TextField txtKhachHang;
-    // 🔹 Thêm biến FXML cho giảm giá
+    //  Thêm biến FXML cho giảm giá
     @FXML private TextField txtGiamGia;
 
-    // 🔹 Dữ liệu chính
+    //  Dữ liệu chính
     private final ObservableList<Product> dsSanPham = FXCollections.observableArrayList();
     private final ObservableList<CartItem> dsGioHang = FXCollections.observableArrayList();
 
@@ -74,7 +74,7 @@ public class ThanhToanController {
 
     }
 
-    /**  Load tất cả sản phẩm ban đầu */
+    //  Load tất cả sản phẩm ban đầu
     private void loadTatCaSanPham() {
         dsSanPham.clear();
         try (Connection conn = Database.getConnection();
@@ -94,7 +94,7 @@ public class ThanhToanController {
         }
     }
 
-    /**  Mở cửa sổ tìm kiếm nâng cao (tái sử dụng SearchProduct.fxml) */
+    //  Mở cửa sổ tìm kiếm nâng cao (tái sử dụng SearchProduct.fxml)
     @FXML
     private void moTimKiemNangCao() {
         try {
@@ -119,12 +119,12 @@ public class ThanhToanController {
         }
     }
 
-    /**  Cập nhật danh sách sản phẩm sau khi tìm kiếm */
+    // Cập nhật danh sách sản phẩm sau khi tìm kiếm
     public void updateProductTable(ObservableList<Product> newList) {
         dsSanPham.setAll(newList);
     }
 
-    /** ➕ Thêm vào giỏ hàng */
+    // ➕ Thêm vào giỏ hàng
     @FXML
     private void themVaoGio() {
         Product sp = tableSanPham.getSelectionModel().getSelectedItem();
@@ -182,7 +182,7 @@ public class ThanhToanController {
         txtSoLuong.setText("1");
     }
 
-    /** 🧹 Xóa giỏ hàng */
+    // Xóa giỏ hàng
     @FXML
     private void xoaGioHang() {
         try (Connection conn = Database.getConnection()) {
@@ -206,7 +206,7 @@ public class ThanhToanController {
 
 
 
-    /**  Thanh toán (có tính điểm khách hàng) */
+    //  Thanh toán (có tính điểm khách hàng)
     @FXML
     private void thanhToan() {
         if (dsGioHang.isEmpty()) {
@@ -321,7 +321,7 @@ public class ThanhToanController {
     }
 
 
-    /**  Cập nhật tổng tiền */
+    //  Cập nhật tổng tiền
     private void capNhatTongTien() {
         double tongTien = tinhTongTien();
         double giamGia = tinhGiamGiaTheoDiem(khachHangDangChon, tongTien);

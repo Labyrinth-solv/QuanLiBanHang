@@ -40,9 +40,8 @@ public class ChiTietHoaDonController {
         colThanhTien.setCellValueFactory(data -> data.getValue().thanhTienProperty().asObject());
     }
 
-    /**
-     * Load chi tiết hóa đơn theo mã hóa đơn
-     */
+     //Load chi tiết hóa đơn theo mã hóa đơn
+
     public void loadChiTietHoaDon(int maHD) {
         danhSachChiTiet.clear();
 
@@ -88,18 +87,17 @@ public class ChiTietHoaDonController {
         tableChiTiet.setItems(danhSachChiTiet);
     }
 
-    /**
-     * Đóng cửa sổ chi tiết
-     */
+
+     // Đóng cửa sổ chi tiết
+
     @FXML
     private void dongCuaSo() {
         Stage stage = (Stage) txtMaHD.getScene().getWindow();
         stage.close();
     }
 
-    /**
-     * In hóa đơn (demo)
-     */
+     //In hóa đơn (demo)
+
     @FXML
     private void inHoaDon() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

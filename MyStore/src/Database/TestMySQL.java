@@ -9,7 +9,7 @@ public class TestMySQL {
         String password = "26012014";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.out.println("✅ Kết nối MySQL thành công!");
+            System.out.println("Kết nối MySQL thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
