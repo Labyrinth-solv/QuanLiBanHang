@@ -26,6 +26,8 @@ public class KhachHangFormController {
     @FXML private TextField txtSdtMoi;
     @FXML private TextField txtDiemMoi;
     @FXML private Button btnThemKhach;
+    @FXML private Button btnXoaKhach;
+    @FXML private Button btnReset;
 
     private final ObservableList<KhachHang> danhSachKhach = FXCollections.observableArrayList();
     private FilteredList<KhachHang> filteredList;
@@ -136,24 +138,115 @@ public class KhachHangFormController {
             ps.setString(1, ten);
             ps.setString(2, sdt);
             ps.setInt(3, diem);
-            ps.executeUpdate();
+            int rowsAffected = ps.executeUpdate();
 
-            ResultSet rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                KhachHang khMoi = new KhachHang(rs.getInt(1), ten, sdt, diem);
-                danhSachKhach.add(khMoi); // auto cập nhật vào TableView
+            if (rowsAffected > 0) {
+                // Lấy ID tự động sinh ra
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int newId = rs.getInt(1);
+                        // Thêm vào danh sách
+                        KhachHang khMoi = new KhachHang(newId, ten, sdt, diem);
+                        danhSachKhach.add(khMoi);
+                        
+                        // Đảm bảo TableView được cập nhật
+                        tableKhachHang.refresh();
+                        
+                        // Thông báo thành công
+                        new Alert(Alert.AlertType.INFORMATION, 
+                                "Đã thêm khách hàng thành công!").showAndWait();
+                    } else {
+                        // Nếu không lấy được ID, refresh lại toàn bộ danh sách
+                        napKhachHang();
+                        new Alert(Alert.AlertType.INFORMATION, 
+                                "Đã thêm khách hàng thành công!").showAndWait();
+                    }
+                }
+                
+                // Ẩn form và xóa dữ liệu
                 formThem.setVisible(false);
                 txtTenMoi.clear();
                 txtSdtMoi.clear();
                 txtDiemMoi.setText("0");
+            } else {
+                new Alert(Alert.AlertType.ERROR, 
+                        "Không thể thêm khách hàng!").showAndWait();
             }
         } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Lỗi khi thêm khách hàng: " + e.getMessage()).show();
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, 
+                    "Lỗi khi thêm khách hàng: " + e.getMessage()).showAndWait();
         }
     }
 
     @FXML
     private void dongCuaSo() {
         ((Stage) txtTimKiem.getScene().getWindow()).close();
+    }
+
+    @FXML
+    private void resetDanhSach() {
+        // Xóa filter tìm kiếm
+        txtTimKiem.clear();
+        
+        // Reload lại danh sách từ database
+        napKhachHang();
+        
+        // Reset filter về hiển thị tất cả
+        if (filteredList != null) {
+            filteredList.setPredicate(p -> true);
+        }
+        
+        // Refresh TableView
+        tableKhachHang.refresh();
+        
+        // Thông báo
+        new Alert(Alert.AlertType.INFORMATION, 
+                "Đã làm mới danh sách khách hàng!").showAndWait();
+    }
+
+    @FXML
+    private void xoaKhachHang() {
+        KhachHang khachChon = tableKhachHang.getSelectionModel().getSelectedItem();
+        
+        if (khachChon == null) {
+            new Alert(Alert.AlertType.WARNING, "Vui lòng chọn khách hàng cần xóa!").showAndWait();
+            return;
+        }
+
+        // Xác nhận trước khi xóa
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Xác nhận xóa");
+        confirmAlert.setHeaderText(null);
+        confirmAlert.setContentText("Bạn có chắc chắn muốn xóa khách hàng:\n" +
+                "Tên: " + khachChon.getTen() + "\n" +
+                "SĐT: " + khachChon.getSdt() + "\n\n" +
+                "Hành động này không thể hoàn tác!");
+        
+        confirmAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try (Connection conn = Database.getConnection()) {
+                    PreparedStatement ps = conn.prepareStatement(
+                            "DELETE FROM khachhang WHERE id = ?"
+                    );
+                    ps.setInt(1, khachChon.getId());
+                    int rowsAffected = ps.executeUpdate();
+                    
+                    if (rowsAffected > 0) {
+                        // Xóa khỏi danh sách và cập nhật TableView
+                        danhSachKhach.remove(khachChon);
+                        new Alert(Alert.AlertType.INFORMATION, 
+                                "Đã xóa khách hàng thành công!").showAndWait();
+                    } else {
+                        new Alert(Alert.AlertType.ERROR, 
+                                "Không thể xóa khách hàng!").showAndWait();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    new Alert(Alert.AlertType.ERROR, 
+                            "Lỗi khi xóa khách hàng: " + e.getMessage()).showAndWait();
+                }
+            }
+        });
     }
 }
