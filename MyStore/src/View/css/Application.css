@@ -11,7 +11,7 @@
 
 
 .app-topbar {
-    -fx-background-color: linear-gradient(to right, #1f3b5b, #2f80ed);
+    -fx-background-color: linear-gradient(to right, #1f3b5b, #305a7a);
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 16, 0.3, 0, 2);
 }
 
@@ -48,7 +48,7 @@
 }
 
 .nav-btn {
-    -fx-background-color: #2f80ed;
+    -fx-background-color: #305a7a;
     -fx-text-fill: #ffffff;
     -fx-font-weight: 600;
     -fx-background-radius: 10;
@@ -56,20 +56,20 @@
     -fx-alignment: CENTER_LEFT;
 }
 .nav-btn:hover {
-    -fx-background-color: #2a78df; /* slightly darker */
+    -fx-background-color: #3a6b8a; /* slightly lighter */
 }
 .nav-btn:focused {
-    -fx-background-color: #246ad0;
-    -fx-effect: dropshadow(gaussian, rgba(36,106,208,0.25), 10, 0.2, 0, 2);
+    -fx-background-color: #2a4d6a;
+    -fx-effect: dropshadow(gaussian, rgba(48,90,122,0.25), 10, 0.2, 0, 2);
 }
 .nav-btn:armed {
-    -fx-background-color: #1f5fbe;
+    -fx-background-color: #26465d;
 }
 
 .main-tabs *.tab-header-area *.tab-header-background {
     -fx-background-color: linear-gradient(to bottom, #e8eef6, #dde6f3);
 }
-.main-tabs .tab:selected { -fx-background-color: #2f80ed; }
+.main-tabs .tab:selected { -fx-background-color: #305a7a; }
 .main-tabs .tab:selected .tab-label { -fx-text-fill: white; -fx-font-weight: 700; }
 .main-tabs .tab { -fx-background-radius: 8 8 0 0; }
 .main-tabs .headers-region { -fx-padding: 6 8 0 8; }
@@ -79,14 +79,14 @@
 
 /* Modern default controls inside tabs */
 .button {
-    -fx-background-color: linear-gradient(to bottom right, #4299e1, #2f80ed);
+    -fx-background-color: linear-gradient(to bottom right, #4a7ba0, #305a7a);
     -fx-text-fill: white;
     -fx-font-weight: 700;
     -fx-background-radius: 8;
     -fx-padding: 8 14 8 14;
 }
-.button:hover { -fx-background-color: linear-gradient(to bottom right, #5aa9ef, #4891f0); }
-.button:armed { -fx-background-color: linear-gradient(to bottom right, #2a78df, #246ad0); }
+.button:hover { -fx-background-color: linear-gradient(to bottom right, #5a8bb0, #3a6b8a); }
+.button:armed { -fx-background-color: linear-gradient(to bottom right, #2a4d6a, #26465d); }
 .button:disabled { -fx-background-color: #cbd5e1; -fx-text-fill: #f8fafc; }
 
 .text-field, .password-field {
@@ -97,8 +97,8 @@
     -fx-border-radius: 8;
 }
 .text-field:focused, .password-field:focused {
-    -fx-border-color: #5aa9ef;
-    -fx-effect: dropshadow(gaussian, rgba(74,144,226,0.35), 10, 0.3, 0, 2);
+    -fx-border-color: #305a7a;
+    -fx-effect: dropshadow(gaussian, rgba(48,90,122,0.35), 10, 0.3, 0, 2);
 }
 
 .table-view {
@@ -114,10 +114,10 @@
     -fx-size: 36px;
 }
 .table-view .table-row-cell:filled:selected, .table-view .table-row-cell:filled:selected:hover {
-    -fx-background-color: rgba(47,128,237,0.18);
+    -fx-background-color: rgba(48,90,122,0.18);
 }
 .table-view .table-row-cell:filled:hover {
-    -fx-background-color: rgba(47,128,237,0.08);
+    -fx-background-color: rgba(48,90,122,0.08);
 }
 
 /* Optional feature tiles on Home (apply classes in FXML if desired) */
