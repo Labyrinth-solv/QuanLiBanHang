@@ -33,7 +33,7 @@ public class ThanhToanController {
     @FXML private TableColumn<CartItem, Double> colGHDGia, colGHThanhTien;
 
     // 🔹 Thành phần khác
-    @FXML private Spinner<Integer> spSoLuong;
+    @FXML private TextField txtSoLuong;
     @FXML private TextField txtTongTien;
     @FXML private TextField txtKhachHang;
     // 🔹 Thêm biến FXML cho giảm giá
@@ -59,8 +59,15 @@ public class ThanhToanController {
         colGHThanhTien.setCellValueFactory(data -> data.getValue().thanhTienProperty().asObject());
         tableGioHang.setItems(dsGioHang);
 
-        // Cấu hình spinner
-        spSoLuong.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1));
+        // Cấu hình TextField số lượng - chỉ cho phép nhập số
+        txtSoLuong.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtSoLuong.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        
+        // Set giá trị mặc định
+        txtSoLuong.setText("1");
 
         // Load danh sách sản phẩm mặc định
         loadTatCaSanPham();
@@ -126,9 +133,32 @@ public class ThanhToanController {
             return;
         }
 
-        int soLuong = spSoLuong.getValue();
+        // Lấy số lượng từ TextField
+        String soLuongText = txtSoLuong.getText().trim();
+        if (soLuongText.isEmpty()) {
+            showAlert("Vui lòng nhập số lượng!");
+            txtSoLuong.setText("1");
+            return;
+        }
+
+        int soLuong;
+        try {
+            soLuong = Integer.parseInt(soLuongText);
+        } catch (NumberFormatException e) {
+            showAlert("Số lượng không hợp lệ!");
+            txtSoLuong.setText("1");
+            return;
+        }
+
+        if (soLuong <= 0) {
+            showAlert("Số lượng phải lớn hơn 0!");
+            txtSoLuong.setText("1");
+            return;
+        }
+
         if (soLuong > sp.getStock()) {
-            showAlert("Không đủ tồn kho!");
+            showAlert("Không đủ tồn kho! Tồn kho hiện tại: " + sp.getStock());
+            txtSoLuong.setText("1");
             return;
         }
 
@@ -147,6 +177,9 @@ public class ThanhToanController {
         dsGioHang.add(new CartItem(sp.getName(), soLuong, sp.getPrice()));
         capNhatTongTien();
         tableSanPham.refresh();
+        
+        // Reset số lượng về 1 sau khi thêm thành công
+        txtSoLuong.setText("1");
     }
 
     /** 🧹 Xóa giỏ hàng */
