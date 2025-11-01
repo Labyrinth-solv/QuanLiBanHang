@@ -37,7 +37,8 @@
 
                 <HBox alignment="CENTER_LEFT" spacing="10">
                     <Label text="Số lượng:" />
-                    <Spinner fx:id="spSoLuong" prefWidth="80" />
+                    <TextField fx:id="txtSoLuong" prefWidth="100" promptText="Nhập số lượng" 
+                               style="-fx-background-radius: 6; -fx-border-radius: 6; -fx-padding: 6 10;" />
                     <Button onAction="#themVaoGio" style="-fx-background-color: #2196F3;                                    -fx-text-fill: white;                                    -fx-background-radius: 6;" text="Thêm vào giỏ" />
                 </HBox>
             </VBox>

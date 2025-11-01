@@ -96,12 +96,12 @@ public class SearchProductController {
                 ));
             }
 
-            // ✅ Gửi kết quả về controller chính trước khi đóng
+            //  Gửi kết quả về controller chính trước khi đóng
             if (onSearchComplete != null) {
                 onSearchComplete.accept(searchResult);
             }
 
-            // ✅ Đóng cửa sổ tìm kiếm
+            //  Đóng cửa sổ tìm kiếm
             Stage stage = (Stage) cbCategory.getScene().getWindow();
             stage.close();
 
