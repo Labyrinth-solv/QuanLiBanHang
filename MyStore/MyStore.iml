@@ -20,5 +20,9 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.14" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20240303" level="project" />
     <orderEntry type="library" name="mysql-connector-j-8.0.33" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac-aarch64:21.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:mac-aarch64:21.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac-aarch64:21.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:mac-aarch64:21.0.6" level="project" />
   </component>
 </module>

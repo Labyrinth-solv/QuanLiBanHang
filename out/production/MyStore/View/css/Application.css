@@ -1,31 +1,197 @@
-.login-pane {
-    -fx-background-color: linear-gradient(to bottom right, #56CCF2, #2F80ED);
-    -fx-background-radius: 15;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 25, 0.3, 0, 0);
+/* Root background for the login window */
+.login-root {
+    -fx-background-color: #f2f4f7;
+}
+
+/* ===== App global styles ===== */
+.app-root {
+    -fx-background-color: linear-gradient(to bottom, #f7f9fc, #eef2f7);
+}
+
+
+
+.app-topbar {
+    -fx-background-color: linear-gradient(to right, #1f3b5b, #305a7a);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 16, 0.3, 0, 2);
+}
+
+.topbar-title {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: 800;
+    -fx-letter-spacing: 0.3px;
+}
+
+.topbar-meta { -fx-text-fill: rgba(255,255,255,0.85); }
+.topbar-meta-strong { -fx-text-fill: #ffffff; -fx-font-weight: bold; }
+
+.app-statusbar {
+    -fx-background-color: linear-gradient(to right, #e5eefb, #e9f7ff);
+    -fx-border-color: #c7dbf7;
+    -fx-border-width: 1 0 0 0;
+}
+
+.sidebar {
+    -fx-background-color: linear-gradient(to bottom, #f7f9fc, #f0f4fa);
+    -fx-padding: 8 8 10 8;
+}
+
+.group > .title {
+    -fx-background-color: linear-gradient(to right, #eef2f7, #e7eef7);
+    -fx-background-radius: 10 10 0 0;
+    -fx-padding: 8 10 8 10;
+}
+.group > .content {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0 0 10 10;
+    -fx-padding: 8 6 8 6;
+}
+
+.nav-btn {
+    -fx-background-color: #305a7a;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: 600;
+    -fx-background-radius: 10;
+    -fx-padding: 8 14 8 14;
+    -fx-alignment: CENTER_LEFT;
+}
+.nav-btn:hover {
+    -fx-background-color: #3a6b8a; /* slightly lighter */
+}
+.nav-btn:focused {
+    -fx-background-color: #2a4d6a;
+    -fx-effect: dropshadow(gaussian, rgba(48,90,122,0.25), 10, 0.2, 0, 2);
+}
+.nav-btn:armed {
+    -fx-background-color: #26465d;
+}
+
+.main-tabs *.tab-header-area *.tab-header-background {
+    -fx-background-color: linear-gradient(to bottom, #e8eef6, #dde6f3);
+}
+.main-tabs .tab:selected { -fx-background-color: #305a7a; }
+.main-tabs .tab:selected .tab-label { -fx-text-fill: white; -fx-font-weight: 700; }
+.main-tabs .tab { -fx-background-radius: 8 8 0 0; }
+.main-tabs .headers-region { -fx-padding: 6 8 0 8; }
+.main-tabs .tab .tab-label { -fx-text-fill: #1f2937; -fx-font-weight: 600; }
+.main-tabs .tab-close-button { -fx-background-color: rgba(255,255,255,0.85); }
+.main-tabs .tab:selected .tab-close-button { -fx-background-color: rgba(255,255,255,0.95); }
+
+/* Modern default controls inside tabs */
+.button {
+    -fx-background-color: linear-gradient(to bottom right, #4a7ba0, #305a7a);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 8;
+    -fx-padding: 8 14 8 14;
+}
+.button:hover { -fx-background-color: linear-gradient(to bottom right, #5a8bb0, #3a6b8a); }
+.button:armed { -fx-background-color: linear-gradient(to bottom right, #2a4d6a, #26465d); }
+.button:disabled { -fx-background-color: #cbd5e1; -fx-text-fill: #f8fafc; }
+
+.text-field, .password-field {
+    -fx-background-color: #ffffff, #ffffff;
+    -fx-background-radius: 8;
+    -fx-padding: 10 12 10 12;
+    -fx-border-color: #d1d9e6;
+    -fx-border-radius: 8;
+}
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #305a7a;
+    -fx-effect: dropshadow(gaussian, rgba(48,90,122,0.35), 10, 0.3, 0, 2);
+}
+
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 10;
+}
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #f3f6fa, #e8eef6);
+}
+.table-view .column-header, .table-view .filler {
+    -fx-size: 36px;
+}
+.table-view .table-row-cell:filled:selected, .table-view .table-row-cell:filled:selected:hover {
+    -fx-background-color: rgba(48,90,122,0.18);
+}
+.table-view .table-row-cell:filled:hover {
+    -fx-background-color: rgba(48,90,122,0.08);
+}
+
+/* Optional feature tiles on Home (apply classes in FXML if desired) */
+.feature-card {
+    -fx-background-color: rgba(255,255,255,0.82);
+    -fx-background-radius: 14;
+    -fx-padding: 16 20 16 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 18, 0.24, 0, 4);
+}
+.feature-emoji { -fx-font-size: 38px; }
+.feature-title { -fx-font-size: 15px; -fx-font-weight: 800; -fx-text-fill: #111827; }
+.feature-subtitle { -fx-text-fill: #6b7280; -fx-font-size: 12px; }
+
+/* Top banner */
+.login-header {
+    -fx-background-color: #305a7a; /* deep blue */
+    -fx-padding: 18 20 18 20;
+}
+
+.app-title {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: 800;
+    -fx-letter-spacing: 0.5px;
+}
+
+.app-subtitle {
+    -fx-text-fill: rgba(255,255,255,0.85);
+    -fx-font-size: 13px;
+}
+
+/* Card area holding fields */
+.login-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-max-width: 480;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.16), 24, 0.25, 0, 4);
+    -fx-border-color: rgba(0,0,0,0.06);
+    -fx-border-radius: 12;
 }
 
 .login-label {
     -fx-font-size: 13px;
-    -fx-text-fill: white;
+    -fx-text-fill: #2b2b2b;
     -fx-font-weight: bold;
 }
 
 .input-field {
-    -fx-background-radius: 6;
-    -fx-padding: 6 8;
+    -fx-background-radius: 10;
+    -fx-padding: 10 12;
+    -fx-border-color: #c7d2e0;
+    -fx-border-radius: 10;
+    -fx-background-color: #ffffff;
+}
+.input-field:focused {
+    -fx-border-color: #2f80ed;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(47,128,237,0.25), 12, 0.3, 0, 2);
+}
+.text-input .prompt-text {
+    -fx-fill: #9ca3af;
 }
 
 .error-label {
-    -fx-font-size: 11px;
-    -fx-text-fill: #ffaaaa;
-    -fx-font-style: italic;
+    -fx-font-size: 12px;
+    -fx-text-fill: #c0392b;
 }
 
 .btn-login {
     -fx-background-color: #27ae60;
-    -fx-background-radius: 6;
+    -fx-background-radius: 10;
     -fx-text-fill: white;
     -fx-font-weight: bold;
+    -fx-padding: 9 18 9 18;
 }
 
 .btn-login:hover {
@@ -34,12 +200,19 @@
 }
 
 .btn-cancel {
-    -fx-background-color: #c0392b;
-    -fx-background-radius: 6;
+    -fx-background-color: #9aa4af;
+    -fx-background-radius: 10;
     -fx-text-fill: white;
+    -fx-padding: 9 18 9 18;
 }
 
 .btn-cancel:hover {
-    -fx-background-color: #e74c3c;
+    -fx-background-color: #aeb7c1;
     -fx-cursor: hand;
+}
+
+/* Footer */
+.login-footer {
+    -fx-padding: 8 10 10 10;
+    -fx-text-fill: #6b7280;
 }

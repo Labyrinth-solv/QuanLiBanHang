@@ -30,11 +30,11 @@ public class MainScreenController implements Initializable {
     private SingleSelectionModel<Tab> selectionModel;
     private static int flagForTab = -1;
     private static int flagForDSSP_DichVu, flagForHoaDon,
-            flagForDSNhanVien, flagForThemNhanVien, flagForDoanhThu, flagForDSHoaDon, flagForDSKhachHang,
+            flagForDoanhThu, flagForDSHoaDon, flagForDSKhachHang,
             flagForHome;
 
     @FXML
-    private Button btnDanhSachSanPham_DichVu, btnHoaDon_DichVu, btnDanhSach_NhanVien, btnThemNhanVien, btnBaoCaoDoanhThu,
+    private Button btnDanhSachSanPham_DichVu, btnHoaDon_DichVu, btnBaoCaoDoanhThu,
             btnDanhSachHoaDon, btnDanhSachKhachHang, btnTrangChu;
 
     @FXML
@@ -51,8 +51,6 @@ public class MainScreenController implements Initializable {
         selectionModel = tab.getSelectionModel();
         flagForDSSP_DichVu = -1;
         flagForHoaDon = -1;
-        flagForDSNhanVien = -1;
-        flagForThemNhanVien = -1;
         flagForDoanhThu = -1;
         flagForDSHoaDon = -1;
         flagForDSKhachHang=-1;
@@ -66,18 +64,13 @@ public class MainScreenController implements Initializable {
         txtTenNhanVien.setText(Constants.staffName);
 
 //        btnDanhSachSanPham_DichVu.setDisable(true);
-//        btnThemNhanVien.setDisable(true);
 
         if (5== Constants.accountID) {
-            btnThemNhanVien.setDisable(true);
-            btnDanhSach_NhanVien.setDisable(true);
             btnBaoCaoDoanhThu.setDisable(true);
             btnDanhSachHoaDon.setDisable(true);
         } else if (6== Constants.accountID) {
             btnDanhSachSanPham_DichVu.setDisable(true);
             btnHoaDon_DichVu.setDisable(true);
-            btnThemNhanVien.setDisable(true);
-            btnDanhSach_NhanVien.setDisable(true);
             btnBaoCaoDoanhThu.setDisable(true);
             btnDanhSachHoaDon.setDisable(true);
         }
@@ -126,31 +119,6 @@ public class MainScreenController implements Initializable {
         btnHoaDon_DichVu.setOnMouseEntered(this::mouseEnter);
 
         btnHoaDon_DichVu.setOnMouseExited(this::mouseExit);
-
-
-        btnDanhSach_NhanVien.setOnMouseClicked(e -> {
-            try {
-                hienThiDSNhanVien();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        });
-
-        btnDanhSach_NhanVien.setOnMouseEntered(this::mouseEnter);
-
-        btnDanhSach_NhanVien.setOnMouseExited(this::mouseExit);
-
-        btnThemNhanVien.setOnMouseClicked(e -> {
-            try {
-                hienThiThemNhanVien();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        });
-
-        btnThemNhanVien.setOnMouseEntered(this::mouseEnter);
-
-        btnThemNhanVien.setOnMouseExited(this::mouseExit);
 
         btnDanhSachKhachHang.setOnMouseClicked(e -> {
             try {
@@ -238,49 +206,6 @@ public class MainScreenController implements Initializable {
 
     }
 
-    private void hienThiThemNhanVien() throws IOException {
-        if(flagForThemNhanVien == -1) {
-            Tab tab1 = new Tab();
-            tab1.setText("Thêm nhân viên");
-
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/menuView/AddEmployee.fxml")));
-            tab1.setContent(root);
-            tab.getTabs().add(tab1);
-
-            flagForTab++;
-            flagForThemNhanVien = flagForTab;
-
-            tab1.setOnCloseRequest(e->{
-                flagForTab --;
-                flagForThemNhanVien = -1;
-            });
-        }
-
-        selectionModel.select(flagForThemNhanVien);
-
-    }
-
-    private void hienThiDSNhanVien() throws IOException {
-        if(flagForDSNhanVien == -1) {
-            Tab tab1 = new Tab();
-            tab1.setText("Danh sách nhân viên");
-
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/View/menuView/EmployeeList.fxml")));
-            tab1.setContent(root);
-            tab.getTabs().add(tab1);
-
-            flagForTab++;
-            flagForDSNhanVien = flagForTab;
-
-            tab1.setOnCloseRequest(e->{
-                flagForTab --;
-                flagForDSNhanVien = -1;
-            });
-        }
-
-        selectionModel.select(flagForDSNhanVien);
-
-    }
     private void hienThiDSKhachHang() throws IOException {
         if(flagForDSKhachHang == -1) {
             Tab tab1 = new Tab();

@@ -6,6 +6,7 @@ module MyStore {
     requires org.json;
     requires java.sql;
     requires java.desktop;
+    requires javafx.graphics;
 
 
     opens Controller to javafx.fxml;

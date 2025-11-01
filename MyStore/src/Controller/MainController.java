@@ -88,7 +88,7 @@ public class MainController implements Initializable {
         if (loiDangNhap.isEmpty()) {
             String url = "jdbc:mysql://localhost:3306/mydata"; // tên database
             String dbUser = "root"; // user MySQL của bạn
-            String dbPass = "17012005"; // mật khẩu MySQL
+            String dbPass = "26012014"; // mật khẩu MySQL
 
             try (Connection conn = DriverManager.getConnection(url, dbUser, dbPass)) {
                 String sql = "SELECT * FROM user WHERE account = ? AND password = ?";
