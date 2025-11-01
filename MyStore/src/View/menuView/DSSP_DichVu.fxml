@@ -39,7 +39,7 @@
             </padding>
 
             <!-- TableView -->
-            <TableView fx:id="tableSanPham" prefHeight="400" prefWidth="800">
+            <TableView fx:id="tableSanPham" VBox.vgrow="ALWAYS" prefHeight="500" prefWidth="800">
                 <columns>
                     <TableColumn fx:id="colId" text="Mã SP" prefWidth="80" />
                     <TableColumn fx:id="colCategoryId" text="Loại" prefWidth="150" />
@@ -50,25 +50,32 @@
             </TableView>
 
             <!-- Khu vực nhập thông tin sản phẩm -->
-            <GridPane hgap="10" vgap="10">
+            <GridPane hgap="15" vgap="8">
                 <padding>
                     <Insets top="15" right="15" bottom="15" left="15"/>
                 </padding>
+                
+                <columnConstraints>
+                    <ColumnConstraints prefWidth="120" hgrow="SOMETIMES"/>
+                    <ColumnConstraints prefWidth="150" hgrow="SOMETIMES"/>
+                    <ColumnConstraints prefWidth="200" hgrow="ALWAYS"/>
+                    <ColumnConstraints prefWidth="120" hgrow="SOMETIMES"/>
+                    <ColumnConstraints prefWidth="100" hgrow="SOMETIMES"/>
+                </columnConstraints>
 
+                <!-- Hàng 1: Labels -->
                 <Label text="Mã SP:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtId" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Loại:" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Tên SP:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <Label text="Đơn giá:" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                <Label text="Tồn kho:" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
 
-                <Label text="Loại:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <!-- Hàng 2: TextFields -->
+                <TextField fx:id="txtId" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                 <TextField fx:id="txtCategoryId" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                <Label text="Tên SP:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtName" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                <Label text="Đơn giá:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtPrice" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-                <Label text="Tồn kho:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <TextField fx:id="txtStock" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                <TextField fx:id="txtName" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <TextField fx:id="txtPrice" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                <TextField fx:id="txtStock" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
             </GridPane>
 
         </VBox>

@@ -13,7 +13,11 @@
             <Label text="🔍 Tìm kiếm:"/>
             <TextField fx:id="txtTimKiem" promptText="Nhập tên hoặc SĐT..." prefWidth="250"/>
             <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnReset" text="🔄 Làm mới" onAction="#resetDanhSach" 
+                    style="-fx-background-color:#3498db; -fx-text-fill:white;"/>
             <Button fx:id="btnThemKhach" text="+ Thêm khách hàng" onAction="#toggleThemKhach" />
+            <Button fx:id="btnXoaKhach" text="🗑️ Xóa khách hàng" onAction="#xoaKhachHang" 
+                    style="-fx-background-color:#e74c3c; -fx-text-fill:white;"/>
         </HBox>
     </top>
 
